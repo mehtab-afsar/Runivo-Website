@@ -1,0 +1,23 @@
+{
+  "name": "runivo-website",
+  "version": "1.0.0",
+  "description": "Runivo Running Club Website",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000 --open=/",
+    "dev": "live-server --port=3000 --open=/",
+    "build": "echo 'Building project...' && echo 'Ready for deployment!'",
+    "serve": "live-server --port=8080"
+  },
+  "keywords": [
+    "running",
+    "club",
+    "community",
+    "fitness"
+  ],
+  "author": "Runivo Running Club",
+  "license": "MIT",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
