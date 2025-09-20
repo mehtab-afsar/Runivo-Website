@@ -1,6 +1,6 @@
 /**
  * Runivo Community Page - JavaScript Functionality
- * Handles form submission, validation, and interactions
+ * Handles form submission, validation, interactions, and header scroll behavior
  */
 
 // DOM Elements
@@ -15,7 +15,189 @@ let isSubmitting = false;
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeCommunityPage();
+    setupHeaderScrollBehavior();
+    setupOriginalFormFunctionality();
 });
+
+/**
+ * Setup header scroll behavior (consistent with other pages)
+ */
+function setupHeaderScrollBehavior() {
+    // Enhanced header scroll effect
+    window.addEventListener('scroll', function() {
+        const header = document.querySelector('.header');
+        if (!header) return;
+        
+        if (window.scrollY > 100) {
+            header.style.background = 'rgba(255, 255, 255, 0.9)';
+            header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.15)';
+            header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+        } else {
+            header.style.background = 'rgba(255, 255, 255, 0.7)';
+            header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.1)';
+            header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+        }
+    });
+
+    // Smooth scrolling for navigation links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+/**
+ * Setup original form functionality from HTML file
+ */
+function setupOriginalFormFunctionality() {
+    // Character counters
+    const fullNameInput = document.getElementById('fullName');
+    if (fullNameInput) {
+        fullNameInput.addEventListener('input', function() {
+            const counter = document.getElementById('nameCounter');
+            if (counter) {
+                counter.textContent = this.value.length;
+            }
+        });
+    }
+
+    const additionalInfoInput = document.getElementById('additionalInfo');
+    if (additionalInfoInput) {
+        additionalInfoInput.addEventListener('input', function() {
+            const counter = document.getElementById('textCounter');
+            if (counter) {
+                counter.textContent = this.value.length;
+            }
+        });
+    }
+
+    // Phone validation
+    const whatsappInput = document.getElementById('whatsappNumber');
+    if (whatsappInput) {
+        whatsappInput.addEventListener('input', function() {
+            const phone = this.value;
+            const validation = document.getElementById('phoneValidation');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            if (!validation) return;
+            
+            // Basic E.164 format validation
+            const phoneRegex = /^\+[1-9]\d{1,14}$/;
+            
+            if (phone.length === 0) {
+                validation.style.display = 'none';
+                validation.className = 'phone-validation';
+            } else if (phoneRegex.test(phone)) {
+                validation.textContent = '✓ Valid phone number';
+                validation.className = 'phone-validation valid';
+                checkFormValidity();
+            } else {
+                validation.textContent = '✗ Please enter a valid phone number (e.g., +91 9876543210)';
+                validation.className = 'phone-validation invalid';
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                }
+            }
+        });
+    }
+
+    // Form validation
+    function checkFormValidity() {
+        const form = document.getElementById('communityForm');
+        const submitBtn = document.getElementById('submitBtn');
+        if (!form || !submitBtn) return;
+
+        const requiredFields = form.querySelectorAll('input[required], select[required]');
+        const interests = form.querySelectorAll('input[name="interests"]:checked');
+        const consent = document.getElementById('consent');
+        const phoneValidation = document.getElementById('phoneValidation');
+        
+        let allValid = true;
+        
+        // Check required fields
+        requiredFields.forEach(field => {
+            if (!field.value.trim()) {
+                allValid = false;
+            }
+        });
+        
+        // Check at least one interest selected
+        if (interests.length === 0) {
+            allValid = false;
+        }
+        
+        // Check consent
+        if (!consent || !consent.checked) {
+            allValid = false;
+        }
+        
+        // Check phone validation
+        if (!phoneValidation || !phoneValidation.classList.contains('valid')) {
+            allValid = false;
+        }
+        
+        submitBtn.disabled = !allValid;
+    }
+
+    // Add event listeners to all form elements
+    if (communityForm) {
+        const inputs = communityForm.querySelectorAll('input, select, textarea');
+        
+        inputs.forEach(input => {
+            input.addEventListener('input', checkFormValidity);
+            input.addEventListener('change', checkFormValidity);
+        });
+        
+        // Form submission
+        communityForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const phoneNumber = document.getElementById('whatsappNumber');
+            const userPhoneNumberSpan = document.getElementById('userPhoneNumber');
+            const modal = document.getElementById('successModal');
+            
+            if (phoneNumber && userPhoneNumberSpan && modal) {
+                const maskedPhone = phoneNumber.value.slice(0, -7) + '*'.repeat(7);
+                userPhoneNumberSpan.textContent = maskedPhone;
+                modal.style.display = 'flex';
+            }
+        });
+    }
+
+    // FAQ functionality
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const faqItem = button.parentElement;
+            const isActive = faqItem.classList.contains('active');
+            
+            // Close all FAQ items
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                const toggle = item.querySelector('.faq-toggle');
+                if (toggle) {
+                    toggle.textContent = '+';
+                }
+            });
+            
+            // Toggle current item
+            if (!isActive) {
+                faqItem.classList.add('active');
+                const toggle = button.querySelector('.faq-toggle');
+                if (toggle) {
+                    toggle.textContent = '-';
+                }
+            }
+        });
+    });
+}
 
 /**
  * Initialize all community page functionality
@@ -71,10 +253,10 @@ async function handleFormSubmit(e) {
     submitButton.disabled = true;
     
     try {
-        // Simulate API call (replace with actual API endpoint)
-        await simulateFormSubmission();
+        // Submit form data to your backend
+        await submitFormData();
         
-        // Show success modal
+        // Show success modal with WhatsApp integration
         showSuccessModal();
         
         // Reset form
@@ -89,6 +271,116 @@ async function handleFormSubmit(e) {
         submitButton.innerHTML = originalText;
         submitButton.disabled = false;
         isSubmitting = false;
+    }
+}
+
+/**
+ * Submit form data (simplified for regular WhatsApp)
+ */
+async function submitFormData() {
+    // For regular WhatsApp setup, you might just want to:
+    // 1. Store data locally/send to simple backend
+    // 2. Log the submission
+    // 3. Prepare for WhatsApp redirect
+    
+    console.log('Form submitted:', formData);
+    
+    // If you have a simple backend endpoint:
+    // const response = await fetch('/api/join-community', {
+    //     method: 'POST',
+    //     headers: { 'Content-Type': 'application/json' },
+    //     body: JSON.stringify(formData)
+    // });
+    
+    // For now, just simulate success
+    return new Promise(resolve => {
+        setTimeout(resolve, 1500);
+    });
+}
+
+/**
+ * WhatsApp Integration Functions
+ */
+
+// Configuration - Replace with your actual WhatsApp details
+const WHATSAPP_CONFIG = {
+    // Your personal WhatsApp number (with country code, no + sign)
+    adminNumber: '919876543210',
+    
+    // Your WhatsApp group invite link
+    groupInviteLink: 'https://chat.whatsapp.com/LOCWwBnvOqJG72zJn0crn2',
+    
+    // Welcome message when contacting admin
+    getAdminMessage: (userData) => {
+        return `Hi! I'm ${userData.fullName} and I just joined the Runivo Community form.
+
+My details:
+- Running Level: ${userData.runningLevel}
+- Interests: ${userData.interests?.join(', ')}
+- Email: ${userData.email}
+
+Please add me to the running group. Thanks!`;
+    }
+};
+
+/**
+ * WhatsApp Integration Functions (Standard WhatsApp)
+ */
+
+/**
+ * Open WhatsApp group invite link
+ */
+function openWhatsAppGroup() {
+    // Direct link to join group
+    window.open(WHATSAPP_CONFIG.groupInviteLink, '_blank');
+}
+
+/**
+ * Contact admin via WhatsApp
+ */
+function contactWhatsAppAdmin() {
+    const message = WHATSAPP_CONFIG.getAdminMessage(formData);
+    const whatsappURL = `https://wa.me/${WHATSAPP_CONFIG.adminNumber}?text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+}
+
+/**
+ * Multiple WhatsApp redirection options for regular WhatsApp
+ */
+function handleWhatsAppRedirection(option = 'group') {
+    switch(option) {
+        case 'group':
+            openWhatsAppGroup();
+            trackWhatsAppClick('group_join');
+            showNotification('Opening WhatsApp group invite...', 'success');
+            break;
+        case 'admin':
+            contactWhatsAppAdmin();
+            trackWhatsAppClick('admin_contact');
+            showNotification('Opening WhatsApp chat with admin...', 'success');
+            break;
+        default:
+            openWhatsAppGroup();
+            break;
+    }
+}
+
+/**
+ * Track WhatsApp clicks for analytics
+ */
+function trackWhatsAppClick(type) {
+    console.log(`WhatsApp ${type} clicked by ${formData.fullName || 'Anonymous'}`);
+    
+    // Add Google Analytics if you have it
+    if (typeof gtag !== 'undefined') {
+        gtag('event', 'whatsapp_click', {
+            'event_category': 'community',
+            'event_label': type,
+            'custom_parameters': {
+                'user_name': formData.fullName,
+                'running_level': formData.runningLevel
+            }
+        });
     }
 }
 
@@ -130,12 +422,13 @@ function trackFormData(e) {
 function validateForm() {
     const requiredFields = [
         'fullName',
-        'age',
-        'location',
+        'dateOfBirth',
+        'gender',
         'whatsappNumber',
+        'email',
         'runningLevel',
-        'preferredTime',
-        'guidelines'
+        'howHeard',
+        'additionalInfo'
     ];
     
     let isValid = true;
@@ -175,15 +468,6 @@ function validateForm() {
         errors.push('whatsappNumber');
     }
     
-    // Validate goals selection
-    const goalsChecked = communityForm.querySelectorAll('[name="goals"]:checked');
-    if (goalsChecked.length === 0) {
-        const goalsSection = communityForm.querySelector('[name="goals"]').closest('.checkbox-group');
-        showSectionError(goalsSection, 'Please select at least one running goal');
-        isValid = false;
-        errors.push('goals');
-    }
-    
     // Validate interests selection
     const interestsChecked = communityForm.querySelectorAll('[name="interests"]:checked');
     if (interestsChecked.length === 0) {
@@ -191,6 +475,14 @@ function validateForm() {
         showSectionError(interestsSection, 'Please select at least one interest');
         isValid = false;
         errors.push('interests');
+    }
+    
+    // Validate consent
+    const consent = document.getElementById('consent');
+    if (!consent || !consent.checked) {
+        showFieldError(consent, 'You must agree to receive WhatsApp messages');
+        isValid = false;
+        errors.push('consent');
     }
     
     return isValid;
@@ -216,6 +508,8 @@ function isValidPhoneNumber(phone) {
  * Show field error
  */
 function showFieldError(field, message) {
+    if (!field) return;
+    
     clearFieldError(field);
     
     field.classList.add('error');
@@ -238,6 +532,8 @@ function showFieldError(field, message) {
  * Show section error for checkbox groups
  */
 function showSectionError(section, message) {
+    if (!section) return;
+    
     const existingError = section.querySelector('.section-error');
     if (existingError) existingError.remove();
     
@@ -261,6 +557,8 @@ function showSectionError(section, message) {
  * Clear field error
  */
 function clearFieldError(field) {
+    if (!field) return;
+    
     field.classList.remove('error');
     const errorDiv = field.parentNode.querySelector('.field-error');
     if (errorDiv) errorDiv.remove();
@@ -272,17 +570,19 @@ function clearFieldError(field) {
 function setupFAQAccordion() {
     faqItems.forEach(item => {
         const question = item.querySelector('.faq-question');
-        question.addEventListener('click', () => {
-            const isActive = item.classList.contains('active');
-            
-            // Close all FAQ items
-            faqItems.forEach(faq => faq.classList.remove('active'));
-            
-            // Open clicked item if it wasn't active
-            if (!isActive) {
-                item.classList.add('active');
-            }
-        });
+        if (question) {
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                
+                // Close all FAQ items
+                faqItems.forEach(faq => faq.classList.remove('active'));
+                
+                // Open clicked item if it wasn't active
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
+        }
     });
 }
 
@@ -290,6 +590,8 @@ function setupFAQAccordion() {
  * Setup form validation on input
  */
 function setupFormValidation() {
+    if (!communityForm) return;
+    
     const inputs = communityForm.querySelectorAll('input, select, textarea');
     
     inputs.forEach(input => {
@@ -416,11 +718,90 @@ function showSuccessModal() {
         successModal.classList.add('show');
         document.body.style.overflow = 'hidden';
         
-        // Generate a fake confirmation number
-        const confirmationNumber = 'RUN-' + Date.now().toString().slice(-8);
-        const confirmationElement = document.getElementById('whatsappContactNumber');
-        if (confirmationElement) {
-            confirmationElement.textContent = '+91 98765 43210'; // Your actual WhatsApp number
+        // Optional: Auto-redirect to WhatsApp after 3 seconds
+        // setTimeout(() => {
+        //     handleWhatsAppRedirection('group');
+        // }, 3000);
+    }
+}
+
+/**
+ * Advanced WhatsApp Integration with Backend
+ */
+
+/**
+ * Generate WhatsApp group invite link (if you have WhatsApp Business API)
+ */
+async function generateWhatsAppInvite() {
+    try {
+        const response = await fetch('/api/whatsapp/generate-invite', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                userPhone: formData.whatsappNumber,
+                userName: formData.fullName
+            })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            return data.inviteLink;
+        }
+    } catch (error) {
+        console.error('Failed to generate WhatsApp invite:', error);
+    }
+    
+    // Fallback to default group link
+    return WHATSAPP_CONFIG.groupInviteLink;
+}
+
+/**
+ * Add user to WhatsApp group via API (requires WhatsApp Business API)
+ */
+async function addUserToWhatsAppGroup() {
+    try {
+        const response = await fetch('/api/whatsapp/add-user', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                phone: formData.whatsappNumber,
+                name: formData.fullName,
+                groupId: 'your-whatsapp-group-id'
+            })
+        });
+        
+        if (response.ok) {
+            showNotification('You have been added to the WhatsApp group!', 'success');
+            return true;
+        } else {
+            throw new Error('Failed to add user to group');
+        }
+    } catch (error) {
+        console.error('Failed to add user to WhatsApp group:', error);
+        showNotification('Could not add you automatically. Please use the group link.', 'error');
+        return false;
+    }
+}
+
+/**
+ * QR Code generation for WhatsApp group
+ */
+function generateWhatsAppQR() {
+    const qrContainer = document.getElementById('whatsapp-qr');
+    if (qrContainer) {
+        // Using QR.js library (you'll need to include this)
+        // <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+        if (typeof QRCode !== 'undefined') {
+            QRCode.toCanvas(qrContainer, WHATSAPP_CONFIG.groupInviteLink, {
+                width: 200,
+                margin: 2
+            });
+        } else {
+            qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(WHATSAPP_CONFIG.groupInviteLink)}" alt="WhatsApp Group QR Code">`;
         }
     }
 }
@@ -491,69 +872,6 @@ function debounce(func, wait) {
         timeout = setTimeout(later, wait);
     };
 }
-
-/**
- * Add CSS animations
- */
-function addDynamicStyles() {
-    const style = document.createElement('style');
-    style.textContent = `
-        @keyframes errorSlideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .animate-in {
-            opacity: 1 !important;
-            transform: translateY(0) !important;
-        }
-        
-        .error {
-            border-color: #ef4444 !important;
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
-        }
-        
-        .loading-spinner {
-            width: 16px;
-            height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-top: 2px solid white;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: inline-block;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .notification {
-            animation: notificationSlide 0.3s ease-out;
-        }
-        
-        @keyframes notificationSlide {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-    `;
-    document.head.appendChild(style);
-}
-
-// Initialize dynamic styles
-addDynamicStyles();
 
 // Global functions for modal (called from HTML)
 window.closeModal = closeModal;

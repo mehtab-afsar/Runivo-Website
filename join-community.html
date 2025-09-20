@@ -16,7 +16,7 @@
     <header class="header">
         <nav class="nav">
             <div class="logo">
-                <a href="index.html">Runivo</a>
+                <a href="index.html">RUNIVO</a>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html#about">About</a></li>
@@ -30,16 +30,8 @@
         </nav>
     </header>
 
-    <!-- Hero Section with Video Background -->
+    <!-- Hero Section with Image Background -->
     <section class="community-hero">
-        <!-- Background Video -->
-        <video class="hero-video-bg" autoplay muted loop playsinline>
-            <source src="src\assets\images\hero\hero-video.mp4" type="video/mp4">
-            <source src="src/assets/videos/running-community.webm" type="video/webm">
-            <!-- Fallback image if video doesn't load -->
-            Your browser does not support the video tag.
-        </video>
-
         <div class="container">
             <div class="hero-content">
                 <div class="hero-text">
@@ -72,7 +64,7 @@
                         <div class="phone-screen">
                             <div class="whatsapp-chat">
                                 <div class="chat-messages">
-                                    <img src="src/assets/images/about/whatapp img.jpeg" alt="Runivo Community"
+                                    <img src="src\assets\images\about\whatapp img.jpeg" alt="Runivo Community"
                                         class="community-image">
                                 </div>
                             </div>
@@ -100,285 +92,125 @@
 
                             <div class="form-group">
                                 <label for="fullName">Full Name *</label>
-                                <input type="text" id="fullName" name="fullName" required
+                                <input type="text" id="fullName" name="fullName" required maxlength="60"
                                     placeholder="Enter your full name">
+                                <div class="char-counter">
+                                    <span id="nameCounter">0</span>/60 characters
+                                </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="age">Age *</label>
-                                <select id="age" name="age" required>
-                                    <option value="">Select your age range</option>
-                                    <option value="under-18">Under 18</option>
-                                    <option value="18-25">18-25</option>
-                                    <option value="26-30">26-30</option>
-                                    <option value="31-35">31-35</option>
-                                    <option value="36-40">36-40</option>
-                                    <option value="41-45">41-45</option>
-                                    <option value="46-50">46-50</option>
-                                    <option value="51-55">51-55</option>
-                                    <option value="56-60">56-60</option>
-                                    <option value="over-60">Over 60</option>
-                                </select>
+                                <label for="dateOfBirth">Date of Birth *</label>
+                                <input type="date" id="dateOfBirth" name="dateOfBirth" class="date-picker" required>
                             </div>
 
                             <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select id="gender" name="gender">
+                                <label for="gender">Gender *</label>
+                                <select id="gender" name="gender" required>
                                     <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="non-binary">Non-binary</option>
-                                    <option value="prefer-not-to-say">Prefer not to say</option>
+                                    <option value="female">Male</option>
+                                    <option value="male">Female</option>
                                 </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="location">Location (City) *</label>
-                                <input type="text" id="location" name="location" required
-                                    placeholder="Which city are you based in?">
-                                <small>This helps us organize local group runs</small>
                             </div>
                         </div>
 
                         <!-- Contact Information -->
                         <div class="form-section">
-                            <h3>Contact Information</h3>
+                            <h3>Contact</h3>
 
                             <div class="form-group">
                                 <label for="whatsappNumber">WhatsApp Number *</label>
-                                <div class="phone-input">
-                                    <select class="country-code">
-                                        <option value="+1">US +1</option>
-                                        <option value="+44">UK +44</option>
-                                        <option value="+91" selected>IN +91</option>
-                                        <option value="+86">CN +86</option>
-                                        <option value="+81">JP +81</option>
-                                        <option value="+49">DE +49</option>
-                                        <option value="+33">FR +33</option>
-                                        <option value="+39">IT +39</option>
-                                        <option value="+34">ES +34</option>
-                                        <option value="+61">AU +61</option>
-                                        <option value="+55">BR +55</option>
-                                        <option value="+52">MX +52</option>
-                                    </select>
-                                    <input type="tel" id="whatsappNumber" name="whatsappNumber" required
-                                        placeholder="Your WhatsApp number">
-                                </div>
-                                <small>This is the number we'll use to add you to the group</small>
+                                <input type="tel" id="whatsappNumber" name="whatsappNumber" required
+                                    placeholder="+91 98765 43210">
+                                <small>This is the number we'll use to add you to the WhatsApp group.</small>
+                                <div class="phone-validation" id="phoneValidation"></div>
                             </div>
 
                             <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" placeholder="your.email@example.com">
-                                <small>Optional - for event updates and newsletters</small>
+                                <label for="email">Email Address *</label>
+                                <input type="email" id="email" name="email" placeholder="your.email@example.com" required>
                             </div>
                         </div>
 
-                        <!-- Running Information -->
+                        <!-- Profile & Interests -->
                         <div class="form-section">
-                            <h3>Running Profile</h3>
+                            <h3>Profile & Interests</h3>
 
                             <div class="form-group">
                                 <label for="runningLevel">Running Experience *</label>
                                 <select id="runningLevel" name="runningLevel" required>
                                     <option value="">Select your level</option>
-                                    <option value="complete-beginner">Complete Beginner (Never run before)</option>
-                                    <option value="beginner">Beginner (0-6 months)</option>
-                                    <option value="novice">Novice (6 months - 1 year)</option>
-                                    <option value="intermediate">Intermediate (1-3 years)</option>
-                                    <option value="advanced">Advanced (3-5 years)</option>
-                                    <option value="expert">Expert (5+ years)</option>
-                                    <option value="competitive">Competitive Runner</option>
+                                    <option value="beginner">Beginner</option>
+                                    <option value="casual">Casual</option>
+                                    <option value="regular">Regular</option>
+                                    <option value="competitive">Competitive</option>
+                                    <option value="pro">Pro</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="runningGoals">What are your running goals? *</label>
-                                <div class="checkbox-group">
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="fitness">
-                                        <span class="checkmark"></span>
-                                        General fitness & health
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="weight-loss">
-                                        <span class="checkmark"></span>
-                                        Weight management
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="5k">
-                                        <span class="checkmark"></span>
-                                        Complete a 5K
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="10k">
-                                        <span class="checkmark"></span>
-                                        Complete a 10K
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="half-marathon">
-                                        <span class="checkmark"></span>
-                                        Half Marathon
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="marathon">
-                                        <span class="checkmark"></span>
-                                        Full Marathon
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="social">
-                                        <span class="checkmark"></span>
-                                        Social running & making friends
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="goals" value="competitive">
-                                        <span class="checkmark"></span>
-                                        Competitive racing
-                                    </label>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="preferredTime">Preferred Running Time *</label>
-                                <select id="preferredTime" name="preferredTime" required>
-                                    <option value="">When do you like to run?</option>
-                                    <option value="early-morning">Early Morning (5:00-7:00 AM)</option>
-                                    <option value="morning">Morning (7:00-9:00 AM)</option>
-                                    <option value="late-morning">Late Morning (9:00-11:00 AM)</option>
-                                    <option value="afternoon">Afternoon (12:00-4:00 PM)</option>
-                                    <option value="evening">Evening (4:00-7:00 PM)</option>
-                                    <option value="night">Night (7:00-9:00 PM)</option>
-                                    <option value="flexible">I'm flexible</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="runningDays">How many days per week do you run?</label>
-                                <select id="runningDays" name="runningDays">
-                                    <option value="">Select frequency</option>
-                                    <option value="1">1 day per week</option>
-                                    <option value="2">2 days per week</option>
-                                    <option value="3">3 days per week</option>
-                                    <option value="4">4 days per week</option>
-                                    <option value="5">5 days per week</option>
-                                    <option value="6">6 days per week</option>
-                                    <option value="7">Every day</option>
-                                    <option value="irregular">Irregular schedule</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <!-- Additional Information -->
-                        <div class="form-section">
-                            <h3>Additional Information</h3>
-
-                            <div class="form-group">
-                                <label for="interests">What interests you most about joining our community? *</label>
+                                <label for="interests">What interests you most about joining? *</label>
                                 <div class="checkbox-group">
                                     <label class="checkbox-option">
                                         <input type="checkbox" name="interests" value="group-runs">
                                         <span class="checkmark"></span>
-                                        Group runs & training sessions
+                                        Group runs & meetups
                                     </label>
                                     <label class="checkbox-option">
                                         <input type="checkbox" name="interests" value="motivation">
                                         <span class="checkmark"></span>
-                                        Daily motivation & support
+                                        Motivation & community
                                     </label>
                                     <label class="checkbox-option">
                                         <input type="checkbox" name="interests" value="events">
                                         <span class="checkmark"></span>
                                         Race events & competitions
                                     </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="interests" value="tips">
-                                        <span class="checkmark"></span>
-                                        Running tips & advice
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="interests" value="challenges">
-                                        <span class="checkmark"></span>
-                                        Monthly challenges
-                                    </label>
-                                    <label class="checkbox-option">
-                                        <input type="checkbox" name="interests" value="social">
-                                        <span class="checkmark"></span>
-                                        Social connections & friendships
-                                    </label>
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <label for="howHeard">How did you hear about us?</label>
-                                <select id="howHeard" name="howHeard">
+                                <label for="howHeard">How did you hear about us? *</label>
+                                <select id="howHeard" name="howHeard" required>
                                     <option value="">Select option</option>
-                                    <option value="friend">Friend or family member</option>
-                                    <option value="social-media">Social media</option>
-                                    <option value="google">Google search</option>
-                                    <option value="event">At a running event</option>
-                                    <option value="local-running-store">Local running store</option>
-                                    <option value="other-runner">Met another member</option>
-                                    <option value="website">Found your website</option>
+                                    <option value="friend">Friend</option>
+                                    <option value="instagram">Instagram</option>
+                                    <option value="event">Event</option>
+                                    <option value="search">Search</option>
                                     <option value="other">Other</option>
                                 </select>
                             </div>
 
                             <div class="form-group">
-                                <label for="additionalInfo">Anything else you'd like us to know?</label>
-                                <textarea id="additionalInfo" name="additionalInfo" rows="4"
-                                    placeholder="Tell us about your running journey, questions, or anything else..."></textarea>
+                                <label for="additionalInfo">Anything else you'd like us to know? *</label>
+                                <textarea id="additionalInfo" name="additionalInfo" rows="4" maxlength="300" required
+                                    placeholder="Share your running story or any requests..."></textarea>
+                                <div class="char-counter">
+                                    <span id="textCounter">0</span>/300 characters
+                                </div>
                             </div>
                         </div>
 
-                        <!-- Community Guidelines -->
+                        <!-- Consent & Submit -->
                         <div class="form-section">
-                            <h3>Community Guidelines</h3>
-                            <div class="guidelines-box">
-                                <h4>Our WhatsApp Community Values:</h4>
-                                <ul>
-                                    <li><strong>Be Supportive:</strong> Encourage and motivate fellow runners</li>
-                                    <li><strong>Stay Positive:</strong> Keep conversations uplifting and constructive
-                                    </li>
-                                    <li><strong>Respect Everyone:</strong> All fitness levels and backgrounds are
-                                        welcome</li>
-                                    <li><strong>Share Responsibly:</strong> Running tips, achievements, and motivation
-                                    </li>
-                                    <li><strong>No Spam:</strong> Keep messages relevant to running and our community
-                                    </li>
-                                    <li><strong>Safety First:</strong> Always prioritize safety in group activities</li>
-                                </ul>
-                            </div>
-
+                            <h3>Consent & Submit</h3>
+                            
                             <div class="checkbox-group">
                                 <label class="checkbox-option">
-                                    <input type="checkbox" name="guidelines" required>
+                                    <input type="checkbox" name="consent" id="consent" required>
                                     <span class="checkmark"></span>
-                                    I agree to follow the community guidelines and maintain a positive, supportive
-                                    environment *
-                                </label>
-
-                                <label class="checkbox-option">
-                                    <input type="checkbox" name="privacy">
-                                    <span class="checkmark"></span>
-                                    I understand that this is a WhatsApp group and my phone number will be visible to
-                                    other members
-                                </label>
-
-                                <label class="checkbox-option">
-                                    <input type="checkbox" name="updates">
-                                    <span class="checkmark"></span>
-                                    I'd like to receive updates about Runivo events and programs via WhatsApp
+                                    I agree to receive messages from Runivo on WhatsApp. 
                                 </label>
                             </div>
                         </div>
                     </div>
 
                     <div class="form-submit">
-                        <button type="submit" class="btn-primary btn-large">
+                        <button type="submit" class="btn-primary btn-large" id="submitBtn" disabled>
                             <span class="whatsapp-icon">●</span>
-                            Join WhatsApp Community
+                            Join the WhatsApp Crew
                         </button>
-                        <p class="submit-note">You'll receive a WhatsApp invitation within 24 hours</p>
+                        <p class="submit-note" id="submitNote">You'll receive a WhatsApp invitation within 24 hours</p>
                     </div>
                 </form>
             </div>
@@ -396,8 +228,8 @@
             <div class="benefits-grid">
                 <div class="benefit-card">
                     <div class="benefit-icon">▶</div>
-                    <h3>Daily Group Runs</h3>
-                    <p>Organized group runs every day at different locations and paces. Never run alone again!</p>
+                    <h3>Weekly Group Runs</h3>
+                    <p>Organized group runs every week at different locations and paces. Never run alone again!</p>
                 </div>
 
                 <div class="benefit-card">
@@ -408,14 +240,14 @@
 
                 <div class="benefit-card">
                     <div class="benefit-icon">■</div>
-                    <h3>Expert Tips</h3>
-                    <p>Regular tips from certified trainers on technique, nutrition, injury prevention, and more.</p>
+                    <h3>Multi-sport</h3>
+                    <p>Running, Boxing, Football, Badminton — pick your play.</p>
                 </div>
 
                 <div class="benefit-card">
                     <div class="benefit-icon">⬢</div>
-                    <h3>Monthly Challenges</h3>
-                    <p>Fun challenges to keep you motivated with prizes and recognition for participants.</p>
+                    <h3>Post-Play Hangouts & Socials</h3>
+                    <p>Casual meetups after games, coffee, food, or a quick snack. Turns teammates into friends.</p>
                 </div>
 
                 <div class="benefit-card">
@@ -433,81 +265,12 @@
         </div>
     </section>
     
-
-    <!-- FAQ Section -->
-    <section class="faq-section">
+    <!-- Footer -->
+    <footer class="footer">
         <div class="container">
-            <h2>Frequently Asked Questions</h2>
-
-            <div class="faq-list">
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Is the WhatsApp community free to join?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Yes! Our WhatsApp community is completely free. You only pay for events and programs you
-                            choose to participate in.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How active is the group?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Very active! We have 50+ messages daily with group runs organized every day, tips shared
-                            regularly, and constant encouragement from members.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Do I need to be an experienced runner?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Not at all! We welcome everyone from complete beginners to experienced marathoners. We have
-                            different pace groups and beginner-friendly activities.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>How quickly will I be added to the group?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We typically add new members within 24 hours of form submission. You'll receive a WhatsApp
-                            invitation directly to your number.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Can I leave the group if I change my mind?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>Of course! You can leave the WhatsApp group at any time. We hope you'll love the community,
-                            but there's no obligation to stay.</p>
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <button class="faq-question">
-                        <span>Are there group runs in my area?</span>
-                        <span class="faq-toggle">+</span>
-                    </button>
-                    <div class="faq-answer">
-                        <p>We organize runs in multiple locations across the city. When you join, you'll see all
-                            upcoming runs and can suggest new locations too!</p>
-                    </div>
-                </div>
-            </div>
+            <p>&copy; 2025 Runivo. All rights reserved.</p>
         </div>
-    </section>
+    </footer>
 
     <!-- Success Modal -->
     <div class="modal" id="successModal">
@@ -521,35 +284,52 @@
                 <h2>Welcome to the Runivo Family!</h2>
             </div>
             <div class="modal-body">
-                <p>Thank you for joining our WhatsApp community! Here's what happens next:</p>
+                <p id="successMessage">Your registration is complete! Choose how you'd like to connect with our community:</p>
+                
+                <div class="whatsapp-options">
+                    <div class="whatsapp-option">
+                        <h4>Join Our WhatsApp Group</h4>
+                        <p>Get instant access to our community group with 500+ active runners</p>
+                        <button class="btn-whatsapp" onclick="handleWhatsAppRedirection('group')">
+                            <span class="whatsapp-icon">💬</span>
+                            Join WhatsApp Group
+                        </button>
+                    </div>
+                    
+                    <div class="whatsapp-option">
+                        <h4>Contact Admin</h4>
+                        <p>Have questions? Message our community admin directly</p>
+                        <button class="btn-whatsapp-secondary" onclick="handleWhatsAppRedirection('admin')">
+                            <span class="whatsapp-icon">📱</span>
+                            Message Admin
+                        </button>
+                    </div>
+                </div>
+                
                 <div class="next-steps">
+                    <h4>What happens next:</h4>
                     <div class="step">
                         <span class="step-number">1</span>
-                        <p>We'll review your information and add you to the group within 24 hours</p>
+                        <p>Click "Join WhatsApp Group" above to get the group invite</p>
                     </div>
                     <div class="step">
                         <span class="step-number">2</span>
-                        <p>You'll receive a WhatsApp invitation to join the group</p>
+                        <p>Introduce yourself to the community</p>
                     </div>
                     <div class="step">
                         <span class="step-number">3</span>
-                        <p>Introduce yourself to the community and start running with us!</p>
+                        <p>Check out upcoming runs and events</p>
                     </div>
-                </div>
-                <div class="whatsapp-preview">
-                    <p><strong>Save this number:</strong> <span id="whatsappContactNumber">+91 98765 43210</span></p>
-                    <p><small>This is our community admin number. Save it to easily identify our invitation!</small></p>
                 </div>
             </div>
             <div class="modal-actions">
-                <button class="btn-primary" onclick="closeModal()">Awesome!</button>
+                <button class="btn-secondary" onclick="closeModal()">I'll join later</button>
                 <a href="index.html" class="btn-secondary">Back to Home</a>
             </div>
         </div>
     </div>
 
     <!-- Scripts -->
-    <script src="src/assets/js/main.js"></script>
     <script src="src/assets/js/community.js"></script>
 </body>
 

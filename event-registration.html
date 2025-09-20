@@ -1,19 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Event Registration - Runivo</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/assets/css/style.css">
+    <title>Weekly Community Run - Runivo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap"
+        rel="stylesheet">
     <link rel="stylesheet" href="src/assets/css/registration.css">
+    <style>
+        /* Remove underline from navigation links */
+        .nav-links a::after {
+            display: none;
+        }
+        
+        /* Modern symbol styling */
+        .highlight-icon {
+            font-size: 1.8rem;
+            color: #FF6B35;
+            font-weight: bold;
+            width: 36px;
+            height: 36px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            color: #FF6B35;
+            font-weight: bold;
+        }
+
+        .payment-option.active .payment-icon {
+            color: #FF6B35;
+        }
+    </style>
 </head>
+
 <body>
-    <!-- Header (same as main page) -->
+    <!-- Enhanced Header (without Join Club button) -->
     <header class="header">
         <nav class="nav">
             <div class="logo">
-                <a href="index.html">Runivo</a>
+                <a href="index.html">RUNIVO</a>
             </div>
             <ul class="nav-links">
                 <li><a href="index.html#about">About</a></li>
@@ -21,9 +53,6 @@
                 <li><a href="index.html#events">Events</a></li>
                 <li><a href="index.html#team">Team</a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="index.html#join" class="join-btn">Join Club</a>
-            </div>
         </nav>
     </header>
 
@@ -52,128 +81,104 @@
 
             <!-- Registration Content -->
             <div class="registration-content">
-                
+
                 <!-- Step 1: Event Details -->
                 <div class="registration-step active" id="step1">
                     <div class="step-header">
-                        <h1>Spring 10K Challenge</h1>
-                        <p class="event-date">March 15, 2025 • 8:00 AM</p>
+                        <h1>Weekly Community Run</h1>
+                        <p class="event-date">Every Saturday • 7:00 AM</p>
                     </div>
-                    
+
                     <div class="event-details-grid">
                         <div class="event-info">
                             <div class="event-hero">
-                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Spring 10K Challenge">
+                                <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                                    alt="Weekly Community Run">
                             </div>
-                            
+
                             <div class="event-description">
-                                <h2>About This Event</h2>
-                                <p>Kick off spring with our annual 10K through the scenic riverside trail. This challenging yet rewarding course takes you through beautiful parks and along the waterfront.</p>
-                                
+                                <h2>About This Week's Run</h2>
+                                <p>Join us for our weekly community run through Riverside Park. This is a casual, friendly group run where everyone sets their own pace and distance. Come as you are!</p>
+
                                 <div class="event-highlights">
                                     <div class="highlight">
-                                        <span class="highlight-icon">🏃‍♀️</span>
+                                        <span class="highlight-icon">▲</span>
                                         <div>
-                                            <h4>All Levels Welcome</h4>
-                                            <p>Whether you're a beginner or experienced runner</p>
+                                            <h4>All Paces Welcome</h4>
+                                            <p>Walk, jog, or run - we support everyone</p>
                                         </div>
                                     </div>
                                     <div class="highlight">
-                                        <span class="highlight-icon">🏆</span>
+                                        <span class="highlight-icon">◆</span>
                                         <div>
-                                            <h4>Official Timing</h4>
-                                            <p>Professional chip timing for accurate results</p>
+                                            <h4>Community Focus</h4>
+                                            <p>Meet fellow runners and make new friends</p>
                                         </div>
                                     </div>
                                     <div class="highlight">
-                                        <span class="highlight-icon">🎉</span>
+                                        <span class="highlight-icon">●</span>
                                         <div>
-                                            <h4>Post-Race Celebration</h4>
-                                            <p>Food, drinks, and awards ceremony</p>
+                                            <h4>Post-Run Hangout</h4>
+                                            <p>Coffee and chat after the run (optional)</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="registration-card">
                             <div class="price-section">
-                                <h3>Registration Options</h3>
-                                
+                                <h3>Registration</h3>
+
                                 <div class="price-options">
                                     <label class="price-option">
-                                        <input type="radio" name="registration_type" value="early" checked>
+                                        <input type="radio" name="registration_type" value="registration" checked>
                                         <div class="option-content">
                                             <div class="option-header">
-                                                <span class="option-title">Early Bird</span>
-                                                <span class="option-price">$25</span>
+                                                <span class="option-title">Weekly Community Run</span>
+                                                <span class="option-price">$5</span>
                                             </div>
-                                            <p class="option-description">Available until March 1st</p>
-                                        </div>
-                                    </label>
-                                    
-                                    <label class="price-option">
-                                        <input type="radio" name="registration_type" value="regular">
-                                        <div class="option-content">
-                                            <div class="option-header">
-                                                <span class="option-title">Regular</span>
-                                                <span class="option-price">$35</span>
-                                            </div>
-                                            <p class="option-description">March 2nd - March 12th</p>
-                                        </div>
-                                    </label>
-                                    
-                                    <label class="price-option">
-                                        <input type="radio" name="registration_type" value="late">
-                                        <div class="option-content">
-                                            <div class="option-header">
-                                                <span class="option-title">Late Registration</span>
-                                                <span class="option-price">$45</span>
-                                            </div>
-                                            <p class="option-description">March 13th - March 14th</p>
+                                            <p class="option-description">Covers refreshments and group activities</p>
                                         </div>
                                     </label>
                                 </div>
-                                
-                                <div class="add-ons">
-                                    <h4>Add-ons</h4>
-                                    <label class="addon-option">
-                                        <input type="checkbox" name="tshirt" value="15">
-                                        <span class="addon-text">Event T-Shirt (+$15)</span>
-                                    </label>
-                                    <label class="addon-option">
-                                        <input type="checkbox" name="parking" value="5">
-                                        <span class="addon-text">Reserved Parking (+$5)</span>
-                                    </label>
-                                </div>
-                                
+
                                 <div class="total-section">
                                     <div class="total-line">
-                                        <span>Registration:</span>
-                                        <span id="registrationPrice">$25</span>
+                                        <span>Date:</span>
+                                        <span>Every Saturday</span>
                                     </div>
                                     <div class="total-line">
-                                        <span>Add-ons:</span>
-                                        <span id="addonsPrice">$0</span>
+                                        <span>Time:</span>
+                                        <span>7:00 AM</span>
+                                    </div>
+                                    <div class="total-line">
+                                        <span>Meeting Point:</span>
+                                        <span>Riverside Park Main Entrance</span>
+                                    </div>
+                                    <div class="total-line">
+                                        <span>Distance Options:</span>
+                                        <span>3K, 5K, or 10K loops</span>
                                     </div>
                                     <div class="total-line total">
                                         <span>Total:</span>
-                                        <span id="totalPrice">$25</span>
+                                        <span id="totalPrice">$5</span>
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <button class="btn-primary btn-large" onclick="nextStep()">Continue Registration</button>
-                            
+
                             <div class="registration-info">
-                                <p><strong>What's included:</strong></p>
+                                <p><strong>What to Bring:</strong></p>
                                 <ul>
-                                    <li>Official race bib and timing chip</li>
-                                    <li>Finisher medal</li>
-                                    <li>Post-race refreshments</li>
-                                    <li>Digital race photos</li>
-                                    <li>Race results and certificate</li>
+                                    <li>Water bottle</li>
+                                    <li>Comfortable running shoes</li>
+                                    <li>Positive attitude</li>
+                                    <li>Phone for post-run group photo</li>
                                 </ul>
+                                <p style="margin-top: 1rem;"><strong>Weather Policy:</strong> Rain or shine (check WhatsApp for updates)</p>
+                                <p><strong>Location:</strong> Parking available, restrooms nearby</p>
                             </div>
                         </div>
                     </div>
@@ -183,230 +188,115 @@
                 <div class="registration-step" id="step2">
                     <div class="step-header">
                         <h2>Personal Information</h2>
-                        <p>Please provide your details for race day</p>
+                        <p>Please provide your details for the community run</p>
                     </div>
-                    
+
                     <form class="registration-form" id="personalInfoForm">
                         <div class="form-grid">
                             <div class="form-group">
                                 <label for="firstName">First Name *</label>
                                 <input type="text" id="firstName" name="firstName" required>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label for="lastName">Last Name *</label>
                                 <input type="text" id="lastName" name="lastName" required>
                             </div>
-                            
-                            <div class="form-group">
+
+                            <div class="form-group full-width">
                                 <label for="email">Email Address *</label>
                                 <input type="email" id="email" name="email" required>
-                                <small>We'll send your confirmation and race updates here</small>
+                                <small>For any weather updates or changes</small>
                             </div>
-                            
-                            <div class="form-group">
-                                <label for="phone">Phone Number *</label>
-                                <input type="tel" id="phone" name="phone" required>
-                                <small>For race day emergencies only</small>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="birthDate">Date of Birth *</label>
-                                <input type="date" id="birthDate" name="birthDate" required>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="gender">Gender</label>
-                                <select id="gender" name="gender">
-                                    <option value="">Select gender</option>
-                                    <option value="male">Male</option>
-                                    <option value="female">Female</option>
-                                    <option value="non-binary">Non-binary</option>
-                                    <option value="prefer-not-to-say">Prefer not to say</option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="address">Address</label>
-                                <input type="text" id="address" name="address" placeholder="Street address">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="city">City</label>
-                                <input type="text" id="city" name="city">
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="zipCode">ZIP Code</label>
-                                <input type="text" id="zipCode" name="zipCode">
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="emergencyContact">Emergency Contact Name *</label>
-                                <input type="text" id="emergencyContact" name="emergencyContact" required>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="emergencyPhone">Emergency Contact Phone *</label>
-                                <input type="tel" id="emergencyPhone" name="emergencyPhone" required>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="medicalInfo">Medical Information / Allergies</label>
-                                <textarea id="medicalInfo" name="medicalInfo" rows="3" placeholder="Any medical conditions, allergies, or medications we should know about..."></textarea>
-                            </div>
-                            
-                            <div class="form-group full-width">
-                                <label for="tshirtSize">T-Shirt Size</label>
-                                <select id="tshirtSize" name="tshirtSize">
-                                    <option value="">Select size (if ordered)</option>
-                                    <option value="XS">XS</option>
-                                    <option value="S">S</option>
-                                    <option value="M">M</option>
-                                    <option value="L">L</option>
-                                    <option value="XL">XL</option>
-                                    <option value="XXL">XXL</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="form-section">
-                            <h3>Running Experience</h3>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label for="runningLevel">Running Level</label>
-                                    <select id="runningLevel" name="runningLevel">
-                                        <option value="">Select level</option>
-                                        <option value="beginner">Beginner (0-1 year)</option>
-                                        <option value="intermediate">Intermediate (1-3 years)</option>
-                                        <option value="advanced">Advanced (3+ years)</option>
-                                        <option value="elite">Elite/Competitive</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="expectedTime">Expected Finish Time</label>
-                                    <select id="expectedTime" name="expectedTime">
-                                        <option value="">Select time</option>
-                                        <option value="under-40">Under 40 minutes</option>
-                                        <option value="40-45">40-45 minutes</option>
-                                        <option value="45-50">45-50 minutes</option>
-                                        <option value="50-55">50-55 minutes</option>
-                                        <option value="55-60">55-60 minutes</option>
-                                        <option value="over-60">Over 60 minutes</option>
-                                        <option value="first-time">First time - not sure</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-section">
-                            <h3>Waivers & Agreements</h3>
-                            <div class="checkbox-group">
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="waiver" required>
-                                    <span class="checkmark"></span>
-                                    I acknowledge that I participate in this event at my own risk and release Runivo Running Club from any liability. <a href="#" class="link">Read full waiver</a>
-                                </label>
-                                
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="marketing">
-                                    <span class="checkmark"></span>
-                                    I agree to receive race updates and future event notifications from Runivo
-                                </label>
-                                
-                                <label class="checkbox-label">
-                                    <input type="checkbox" name="photos">
-                                    <span class="checkmark"></span>
-                                    I consent to the use of my photos/videos taken during the event for marketing purposes
-                                </label>
-                            </div>
-                        </div>
-                    </form>
-                    
-                    <div class="step-actions">
-                        <button class="btn-secondary" onclick="previousStep()">Back</button>
-                        <button class="btn-primary" onclick="nextStep()">Continue to Payment</button>
-                    </div>
-                </div>
 
-                <!-- Step 3: Payment -->
-                <div class="registration-step" id="step3">
-                    <div class="step-header">
-                        <h2>Payment Information</h2>
-                        <p>Secure payment processing</p>
-                    </div>
-                    
-                    <div class="payment-container">
-                        <div class="payment-summary">
-                            <h3>Order Summary</h3>
-                            <div class="summary-line">
-                                <span>Spring 10K Challenge - Early Bird</span>
-                                <span>$25.00</span>
+                            <div class="form-group full-width">
+                                <label for="phone">Phone Number (Optional)</label>
+                                <input type="tel" id="phone" name="phone">
+                                <small>For WhatsApp group invitation</small>
                             </div>
-                            <div class="summary-line" id="tshirtSummary" style="display: none;">
-                                <span>Event T-Shirt</span>
-                                <span>$15.00</span>
+
+                            <div class="form-group full-width">
+                                <label for="expectedDistance">Planning to run:</label>
+                                <select id="expectedDistance" name="expectedDistance">
+                                    <option value="">I'll decide on the day</option>
+                                    <option value="3k">3K (beginner-friendly)</option>
+                                    <option value="5k">5K (most popular)</option>
+                                    <option value="10k">10K (longer challenge)</option>
+                                </select>
                             </div>
-                            <div class="summary-line" id="parkingSummary" style="display: none;">
-                                <span>Reserved Parking</span>
-                                <span>$5.00</span>
+
+                            <div class="form-group full-width">
+                                <label for="runningLevel">Running Experience (Optional)</label>
+                                <select id="runningLevel" name="runningLevel">
+                                    <option value="">Select level</option>
+                                    <option value="new">New to running</option>
+                                    <option value="casual">Casual runner</option>
+                                    <option value="regular">Regular runner</option>
+                                    <option value="experienced">Experienced runner</option>
+                                </select>
+                                <small>Helps us match you with similar pace groups</small>
                             </div>
-                            <div class="summary-line total">
-                                <span>Total</span>
-                                <span id="finalTotal">$25.00</span>
+
+                            <div class="form-group full-width">
+                                <label for="firstTime">First time joining us?</label>
+                                <select id="firstTime" name="firstTime">
+                                    <option value="yes">Yes, this is my first time!</option>
+                                    <option value="no">No, I've run with you before</option>
+                                </select>
                             </div>
                         </div>
-                        
-                        <div class="payment-form">
-                            <h3>Payment Method</h3>
-                            
-                            <!-- Payment Options -->
-                            <div class="payment-options">
-                                <label class="payment-option active">
-                                    <input type="radio" name="payment_method" value="card" checked>
-                                    <span class="payment-icon">💳</span>
-                                    <span>Credit/Debit Card</span>
-                                </label>
-                                
-                                <label class="payment-option">
-                                    <input type="radio" name="payment_method" value="paypal">
-                                    <span class="payment-icon">🅿️</span>
-                                    <span>PayPal</span>
-                                </label>
-                                
-                                <label class="payment-option">
-                                    <input type="radio" name="payment_method" value="venmo">
-                                    <span class="payment-icon">📱</span>
-                                    <span>Venmo</span>
-                                </label>
+
+                        <div class="form-section">
+                            <h3>What Happens</h3>
+                            <div style="background: #f8f9fa; padding: 1rem; border-radius: 8px;">
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="background: #FF6B35; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 1rem;">1</span>
+                                    <span>Meet at 7:00 AM at the park entrance</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="background: #FF6B35; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 1rem;">2</span>
+                                    <span>Brief intro for newcomers (5 minutes)</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="background: #FF6B35; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 1rem;">3</span>
+                                    <span>Split into natural pace groups</span>
+                                </div>
+                                <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                                    <span style="background: #FF6B35; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 1rem;">4</span>
+                                    <span>Run your chosen distance at your pace</span>
+                                </div>
+                                <div style="display: flex; align-items: center;">
+                                    <span style="background: #FF6B35; color: white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; margin-right: 1rem;">5</span>
+                                    <span>Optional coffee meetup at nearby cafe</span>
+                                </div>
                             </div>
-                            
+                        </div>
+
                             <!-- Card Payment Form -->
                             <div class="card-form" id="cardForm">
                                 <div class="form-group">
                                     <label for="cardNumber">Card Number</label>
                                     <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
                                 </div>
-                                
+
                                 <div class="form-row">
                                     <div class="form-group">
                                         <label for="expiryDate">Expiry Date</label>
                                         <input type="text" id="expiryDate" placeholder="MM/YY" maxlength="5">
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <label for="cvv">CVV</label>
                                         <input type="text" id="cvv" placeholder="123" maxlength="4">
                                     </div>
                                 </div>
-                                
+
                                 <div class="form-group">
                                     <label for="cardName">Name on Card</label>
                                     <input type="text" id="cardName" placeholder="John Doe">
                                 </div>
                             </div>
-                            
+
                             <!-- Alternative Payment Forms (hidden by default) -->
                             <div class="paypal-form" id="paypalForm" style="display: none;">
                                 <div class="payment-placeholder">
@@ -416,7 +306,7 @@
                                     </div>
                                 </div>
                             </div>
-                            
+
                             <div class="venmo-form" id="venmoForm" style="display: none;">
                                 <div class="payment-placeholder">
                                     <p>You'll be redirected to Venmo to complete your payment.</p>
@@ -427,7 +317,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="step-actions">
                         <button class="btn-secondary" onclick="previousStep()">Back</button>
                         <button class="btn-primary btn-large" onclick="processPayment()">
@@ -445,48 +335,48 @@
                                 <div class="checkmark"></div>
                             </div>
                         </div>
-                        
-                        <h1>Registration Confirmed!</h1>
-                        <p class="confirmation-message">You're all set for the Spring 10K Challenge</p>
-                        
+
+                        <h1>You're All Set!</h1>
+                        <p class="confirmation-message">See you this Saturday for our community run</p>
+
                         <div class="confirmation-details">
                             <div class="detail-card">
-                                <h3>Event Details</h3>
+                                <h3>Run Details</h3>
                                 <div class="detail-item">
                                     <span class="detail-label">Event:</span>
-                                    <span class="detail-value">Spring 10K Challenge</span>
+                                    <span class="detail-value">Weekly Community Run</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Date:</span>
-                                    <span class="detail-value">March 15, 2025</span>
+                                    <span class="detail-value">Every Saturday</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Time:</span>
-                                    <span class="detail-value">8:00 AM</span>
+                                    <span class="detail-value">7:00 AM</span>
                                 </div>
                                 <div class="detail-item">
-                                    <span class="detail-label">Location:</span>
+                                    <span class="detail-label">Meeting Point:</span>
                                     <span class="detail-value">Riverside Park, Main Entrance</span>
                                 </div>
                             </div>
-                            
+
                             <div class="detail-card">
-                                <h3>Registration Info</h3>
+                                <h3>Your RSVP</h3>
                                 <div class="detail-item">
-                                    <span class="detail-label">Registration #:</span>
-                                    <span class="detail-value" id="confirmationNumber">RUN-2025-001234</span>
+                                    <span class="detail-label">RSVP #:</span>
+                                    <span class="detail-value" id="confirmationNumber">RUN-SAT-001234</span>
                                 </div>
                                 <div class="detail-item">
-                                    <span class="detail-label">Bib Number:</span>
-                                    <span class="detail-value">Will be assigned closer to race day</span>
+                                    <span class="detail-label">Distance:</span>
+                                    <span class="detail-value">You'll choose on the day</span>
                                 </div>
                                 <div class="detail-item">
                                     <span class="detail-label">Total Paid:</span>
-                                    <span class="detail-value" id="paidAmount">$25.00</span>
+                                    <span class="detail-value" id="paidAmount">$5.00</span>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="next-steps">
                             <h3>What's Next?</h3>
                             <div class="steps-list">
@@ -494,36 +384,36 @@
                                     <span class="step-number">1</span>
                                     <div class="step-content">
                                         <h4>Confirmation Email</h4>
-                                        <p>Check your email for detailed event information and race packet pickup details.</p>
+                                        <p>Check your email for location details and our WhatsApp group link.</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="next-step">
                                     <span class="step-number">2</span>
                                     <div class="step-content">
-                                        <h4>Race Packet Pickup</h4>
-                                        <p>March 13-14, 2025 at our club headquarters (details in email).</p>
+                                        <h4>What to Bring</h4>
+                                        <p>Water, comfortable shoes, positive attitude, and your phone for photos!</p>
                                     </div>
                                 </div>
-                                
+
                                 <div class="next-step">
                                     <span class="step-number">3</span>
                                     <div class="step-content">
-                                        <h4>Race Day</h4>
-                                        <p>Arrive 30-45 minutes early for parking and warm-up.</p>
+                                        <h4>Saturday Morning</h4>
+                                        <p>Arrive by 7:00 AM. Look for the Runivo group near the fountain!</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="confirmation-actions">
-                            <button class="btn-primary" onclick="downloadConfirmation()">Download Confirmation PDF</button>
-                            <button class="btn-secondary" onclick="addToCalendar()">Add to Calendar</button>
+                            <button class="btn-primary" onclick="addToCalendar()">Add to Calendar</button>
+                            <button class="btn-secondary" onclick="viewRoute()">View Route Map</button>
                             <a href="index.html" class="btn-secondary">Return to Home</a>
                         </div>
-                        
+
                         <div class="social-share">
-                            <p>Share your excitement:</p>
+                            <p>Share with friends:</p>
                             <div class="share-buttons">
                                 <button class="share-btn facebook">Share on Facebook</button>
                                 <button class="share-btn twitter">Share on Twitter</button>
@@ -536,8 +426,88 @@
         </div>
     </section>
 
-    <!-- Scripts -->
-    <script src="src/assets/js/main.js"></script>
-    <script src="src/assets/js/registration.js"></script>
+    <script>
+        // Enhanced header scroll effect
+        window.addEventListener('scroll', function () {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.9)';
+                header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.15)';
+                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.7)';
+                header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.1)';
+                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
+            }
+        });
+
+        let currentStep = 1;
+
+        function nextStep() {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+            
+            // Show next step
+            currentStep++;
+            if (currentStep > 4) currentStep = 4;
+            
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.add('active');
+            
+            // Update progress bar
+            for (let i = 1; i <= currentStep; i++) {
+                document.querySelector(`.progress-step[data-step="${i}"]`).classList.add('active');
+            }
+        }
+
+        function previousStep() {
+            // Hide current step
+            document.getElementById(`step${currentStep}`).classList.remove('active');
+            document.querySelector(`.progress-step[data-step="${currentStep}"]`).classList.remove('active');
+            
+            // Show previous step
+            currentStep--;
+            if (currentStep < 1) currentStep = 1;
+            
+            document.getElementById(`step${currentStep}`).classList.add('active');
+            
+            // Update progress bar
+            for (let i = currentStep + 1; i <= 4; i++) {
+                document.querySelector(`.progress-step[data-step="${i}"]`).classList.remove('active');
+            }
+        }
+
+        function processPayment() {
+            // Simulate payment processing
+            const btn = document.querySelector('.btn-primary.btn-large');
+            const btnText = btn.querySelector('.btn-text');
+            const btnLoader = btn.querySelector('.btn-loader');
+            
+            btn.disabled = true;
+            btnText.style.display = 'none';
+            btnLoader.style.display = 'inline';
+            
+            setTimeout(() => {
+                nextStep(); // Go to confirmation
+            }, 2000);
+        }
+
+        function addToCalendar() {
+            alert('Adding weekly community run to your calendar...');
+        }
+
+        function viewRoute() {
+            alert('Opening route map...');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set initial state
+            document.getElementById('step1').classList.add('active');
+            document.querySelector('.progress-step[data-step="1"]').classList.add('active');
+        });
+    </script>
 </body>
+
 </html>
