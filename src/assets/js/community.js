@@ -15,44 +15,10 @@ let isSubmitting = false;
 // Initialize when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeCommunityPage();
-    setupHeaderScrollBehavior();
     setupOriginalFormFunctionality();
 });
 
-/**
- * Setup header scroll behavior (consistent with other pages)
- */
-function setupHeaderScrollBehavior() {
-    // Enhanced header scroll effect
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('.header');
-        if (!header) return;
-        
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(255, 255, 255, 0.9)';
-            header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.15)';
-            header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
-        } else {
-            header.style.background = 'rgba(255, 255, 255, 0.7)';
-            header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.1)';
-            header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
-        }
-    });
 
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-}
 
 /**
  * Setup original form functionality from HTML file
@@ -89,8 +55,8 @@ function setupOriginalFormFunctionality() {
             
             if (!validation) return;
             
-            // Basic E.164 format validation
-            const phoneRegex = /^\+[1-9]\d{1,14}$/;
+            // Basic phone number validation (more lenient)
+            const phoneRegex = /^(\+91|91)?[6-9]\d{9}$/;
             
             if (phone.length === 0) {
                 validation.style.display = 'none';
@@ -145,6 +111,15 @@ function setupOriginalFormFunctionality() {
         }
         
         submitBtn.disabled = !allValid;
+
+        // Debug: Log validation status
+        console.log('Form validation:', {
+            allValid,
+            requiredFieldsCount: requiredFields.length,
+            interestsSelected: interests.length,
+            consentChecked: consent?.checked,
+            phoneValidationValid: phoneValidation?.classList.contains('valid')
+        });
     }
 
     // Add event listeners to all form elements
@@ -156,20 +131,7 @@ function setupOriginalFormFunctionality() {
             input.addEventListener('change', checkFormValidity);
         });
         
-        // Form submission
-        communityForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const phoneNumber = document.getElementById('whatsappNumber');
-            const userPhoneNumberSpan = document.getElementById('userPhoneNumber');
-            const modal = document.getElementById('successModal');
-            
-            if (phoneNumber && userPhoneNumberSpan && modal) {
-                const maskedPhone = phoneNumber.value.slice(0, -7) + '*'.repeat(7);
-                userPhoneNumberSpan.textContent = maskedPhone;
-                modal.style.display = 'flex';
-            }
-        });
+        // Form submission is handled by setupFormHandling() function
     }
 
     // FAQ functionality
@@ -306,9 +268,9 @@ async function submitFormData() {
 const WHATSAPP_CONFIG = {
     // Your personal WhatsApp number (with country code, no + sign)
     adminNumber: '919876543210',
-    
+
     // Your WhatsApp group invite link
-    groupInviteLink: 'https://chat.whatsapp.com/LOCWwBnvOqJG72zJn0crn2',
+    groupInviteLink: 'https://chat.whatsapp.com/Gs7dSyK7HRb3xESaNG5gdo',
     
     // Welcome message when contacting admin
     getAdminMessage: (userData) => {
@@ -488,13 +450,6 @@ function validateForm() {
     return isValid;
 }
 
-/**
- * Email validation
- */
-function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
 
 /**
  * Phone number validation (basic)
@@ -596,7 +551,7 @@ function setupFormValidation() {
     
     inputs.forEach(input => {
         input.addEventListener('blur', validateField);
-        input.addEventListener('input', debounce(clearFieldErrorOnInput, 300));
+        input.addEventListener('input', clearFieldErrorOnInput);
     });
 }
 
@@ -714,97 +669,23 @@ function setupFormAnimations() {
  * Show success modal
  */
 function showSuccessModal() {
+    console.log('showSuccessModal function called');
+    console.log('successModal element:', successModal);
     if (successModal) {
+        console.log('Adding show class to modal');
         successModal.classList.add('show');
         document.body.style.overflow = 'hidden';
-        
+        console.log('Modal should now be visible');
+
         // Optional: Auto-redirect to WhatsApp after 3 seconds
         // setTimeout(() => {
         //     handleWhatsAppRedirection('group');
         // }, 3000);
+    } else {
+        console.error('successModal element not found!');
     }
 }
 
-/**
- * Advanced WhatsApp Integration with Backend
- */
-
-/**
- * Generate WhatsApp group invite link (if you have WhatsApp Business API)
- */
-async function generateWhatsAppInvite() {
-    try {
-        const response = await fetch('/api/whatsapp/generate-invite', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                userPhone: formData.whatsappNumber,
-                userName: formData.fullName
-            })
-        });
-        
-        if (response.ok) {
-            const data = await response.json();
-            return data.inviteLink;
-        }
-    } catch (error) {
-        console.error('Failed to generate WhatsApp invite:', error);
-    }
-    
-    // Fallback to default group link
-    return WHATSAPP_CONFIG.groupInviteLink;
-}
-
-/**
- * Add user to WhatsApp group via API (requires WhatsApp Business API)
- */
-async function addUserToWhatsAppGroup() {
-    try {
-        const response = await fetch('/api/whatsapp/add-user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                phone: formData.whatsappNumber,
-                name: formData.fullName,
-                groupId: 'your-whatsapp-group-id'
-            })
-        });
-        
-        if (response.ok) {
-            showNotification('You have been added to the WhatsApp group!', 'success');
-            return true;
-        } else {
-            throw new Error('Failed to add user to group');
-        }
-    } catch (error) {
-        console.error('Failed to add user to WhatsApp group:', error);
-        showNotification('Could not add you automatically. Please use the group link.', 'error');
-        return false;
-    }
-}
-
-/**
- * QR Code generation for WhatsApp group
- */
-function generateWhatsAppQR() {
-    const qrContainer = document.getElementById('whatsapp-qr');
-    if (qrContainer) {
-        // Using QR.js library (you'll need to include this)
-        // <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
-        if (typeof QRCode !== 'undefined') {
-            QRCode.toCanvas(qrContainer, WHATSAPP_CONFIG.groupInviteLink, {
-                width: 200,
-                margin: 2
-            });
-        } else {
-            qrContainer.innerHTML = `<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${encodeURIComponent(WHATSAPP_CONFIG.groupInviteLink)}" alt="WhatsApp Group QR Code">`;
-        }
-    }
-}
 
 /**
  * Close modal
@@ -858,6 +739,7 @@ function showNotification(message, type = 'info') {
     }, 4000);
 }
 
+
 /**
  * Debounce utility function
  */
@@ -875,3 +757,10 @@ function debounce(func, wait) {
 
 // Global functions for modal (called from HTML)
 window.closeModal = closeModal;
+window.handleWhatsAppRedirection = handleWhatsAppRedirection;
+
+// Debug: Log that functions are being exported
+console.log('Global functions exported:', {
+    closeModal: typeof window.closeModal,
+    handleWhatsAppRedirection: typeof window.handleWhatsAppRedirection
+});

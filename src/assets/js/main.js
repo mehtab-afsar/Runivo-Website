@@ -91,28 +91,28 @@ function setupMobileMenu() {
     
     // Close menu when clicking outside
     document.addEventListener('click', (e) => {
-        if (!e.target.closest('.nav') && navLinks.classList.contains('active')) {
+        if (navLinks && !e.target.closest('.nav') && navLinks.classList.contains('active')) {
             closeMobileMenu();
         }
     });
     
     // Close menu on escape key
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && navLinks.classList.contains('active')) {
+        if (e.key === 'Escape' && navLinks && navLinks.classList.contains('active')) {
             closeMobileMenu();
         }
     });
 }
 
 function toggleMobileMenu() {
-    navLinks.classList.toggle('active');
-    mobileMenuBtn.classList.toggle('active');
+    if (navLinks) navLinks.classList.toggle('active');
+    if (mobileMenuBtn) mobileMenuBtn.classList.toggle('active');
     document.body.classList.toggle('menu-open');
 }
 
 function closeMobileMenu() {
-    navLinks.classList.remove('active');
-    mobileMenuBtn.classList.remove('active');
+    if (navLinks) navLinks.classList.remove('active');
+    if (mobileMenuBtn) mobileMenuBtn.classList.remove('active');
     document.body.classList.remove('menu-open');
 }
 
@@ -382,6 +382,71 @@ function setupLazyLoading() {
         });
     }
 }
+
+/**
+ * Show contact modal
+ */
+function showContactModal(event) {
+    event.preventDefault();
+    const modal = document.getElementById('contactModal');
+    if (modal) {
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+/**
+ * Close contact modal
+ */
+function closeContactModal() {
+    const modal = document.getElementById('contactModal');
+    if (modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+}
+
+/**
+ * Copy email to clipboard
+ */
+function copyEmail() {
+    const email = 'runivo.official@gmail.com';
+    navigator.clipboard.writeText(email).then(() => {
+        // Show success feedback
+        const btn = document.querySelector('.copy-email-btn');
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '<span class="copy-icon">✓</span> Copied!';
+        btn.style.background = '#4ade80';
+
+        setTimeout(() => {
+            btn.innerHTML = originalText;
+            btn.style.background = '';
+        }, 2000);
+    }).catch(() => {
+        // Fallback: select the email text
+        alert('Copy failed. Please manually copy: ' + email);
+    });
+}
+
+// Close modal when clicking outside (only if modal exists)
+document.addEventListener('click', function(event) {
+    const modal = document.getElementById('contactModal');
+    if (modal && modal.classList.contains('show') && event.target === modal) {
+        closeContactModal();
+    }
+});
+
+// Close modal on escape key
+document.addEventListener('keydown', function(event) {
+    if (event.key === 'Escape') {
+        closeContactModal();
+    }
+});
+
+// Make functions globally accessible
+window.showContactModal = showContactModal;
+window.closeContactModal = closeContactModal;
+window.copyEmail = copyEmail;
 
 // Add CSS for animations
 const style = document.createElement('style');

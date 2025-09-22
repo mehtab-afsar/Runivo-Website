@@ -479,6 +479,11 @@ ul {
     text-align: center;
 }
 
+.programs-header {
+    text-align: center;
+    margin-bottom: var(--spacing-3xl);
+}
+
 .programs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -543,11 +548,31 @@ ul {
 .merch {
     padding: 7.5rem 5%;
     background: var(--bg-white);
+    position: relative;
+}
+
+.merch::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(128, 128, 128, 0.15);
+    pointer-events: none;
+    z-index: 1;
+}
+
+.merch-container {
+    position: relative;
+    z-index: 2;
 }
 
 .merch-container {
     max-width: 1400px;
     margin: 0 auto;
+    position: relative;
+    z-index: 2;
 }
 
 .merch-header {
@@ -981,4 +1006,127 @@ ul {
 
 .mt-4 {
     margin-top: 2rem;
+}
+
+/* =================================
+   CONTACT MODAL STYLES
+   ================================= */
+
+#contactModal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+}
+
+#contactModal.show {
+    display: flex;
+    animation: modalFadeIn 0.3s ease-out;
+}
+
+#contactModal .modal-content {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+    max-width: 500px;
+    width: 90%;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+#contactModal .modal-header {
+    padding: 2rem 2rem 1rem;
+    border-bottom: 1px solid #f0f0f0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#contactModal .modal-header h2 {
+    color: var(--primary-color);
+    font-weight: var(--font-weight-light);
+    margin: 0;
+    font-size: 1.8rem;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #999;
+    cursor: pointer;
+    padding: 0.5rem;
+    border-radius: 50%;
+    transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+    background: #f0f0f0;
+    color: #666;
+}
+
+#contactModal .modal-body {
+    padding: 2rem;
+}
+
+.email-display {
+    text-align: center;
+    background: #f8f9fa;
+    border: 2px solid var(--primary-color);
+    border-radius: 12px;
+    padding: 2rem;
+}
+
+.email-address {
+    font-size: 1.3rem;
+    font-weight: var(--font-weight-semibold);
+    color: var(--primary-color);
+    margin: 0 0 1.5rem 0;
+    word-break: break-all;
+}
+
+.copy-email-btn {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: var(--font-weight-medium);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.copy-email-btn:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.copy-icon {
+    font-size: 1.1rem;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes modalSlideIn {
+    from {
+        transform: translateY(-50px) scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
 }
