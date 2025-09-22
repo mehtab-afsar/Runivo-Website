@@ -24,9 +24,7 @@
                 <li><a href="index.html#events">Events</a></li>
                 <li><a href="index.html#team">Team</a></li>
             </ul>
-            <div class="nav-actions">
-                <a href="join-community.html" class="join-btn active">Join Community</a>
-            </div>
+
         </nav>
     </header>
 
@@ -84,7 +82,7 @@
                     <p>Fill out the form below and we'll add you to our WhatsApp group instantly</p>
                 </div>
 
-                <form class="community-form" id="communityForm">
+                <form class="community-form" id="communityForm" onsubmit="return false;">
                     <div class="form-grid">
                         <!-- Personal Information -->
                         <div class="form-section">
@@ -206,7 +204,7 @@
                     </div>
 
                     <div class="form-submit">
-                        <button type="submit" class="btn-primary btn-large" id="submitBtn" disabled>
+                        <button type="button" class="btn-primary btn-large" id="submitBtn" onclick="document.getElementById('successModal').classList.add('show'); document.body.style.overflow = 'hidden';">
                             <span class="whatsapp-icon">●</span>
                             Join the WhatsApp Crew
                         </button>
@@ -284,41 +282,28 @@
                 <h2>Welcome to the Runivo Family!</h2>
             </div>
             <div class="modal-body">
-                <p id="successMessage">Your registration is complete! Choose how you'd like to connect with our community:</p>
-                
+                <p id="successMessage">Your registration is complete! Ready to join our WhatsApp community?</p>
+
                 <div class="whatsapp-options">
                     <div class="whatsapp-option">
                         <h4>Join Our WhatsApp Group</h4>
-                        <p>Get instant access to our community group with 500+ active runners</p>
+                        <p>Connect with 500+ active runners instantly</p>
                         <button class="btn-whatsapp" onclick="handleWhatsAppRedirection('group')">
-                            <span class="whatsapp-icon">💬</span>
+                            <span class="whatsapp-icon">◉</span>
                             Join WhatsApp Group
-                        </button>
-                    </div>
-                    
-                    <div class="whatsapp-option">
-                        <h4>Contact Admin</h4>
-                        <p>Have questions? Message our community admin directly</p>
-                        <button class="btn-whatsapp-secondary" onclick="handleWhatsAppRedirection('admin')">
-                            <span class="whatsapp-icon">📱</span>
-                            Message Admin
                         </button>
                     </div>
                 </div>
                 
                 <div class="next-steps">
-                    <h4>What happens next:</h4>
+                    <h4>Next steps:</h4>
                     <div class="step">
-                        <span class="step-number">1</span>
-                        <p>Click "Join WhatsApp Group" above to get the group invite</p>
+                        <span class="step-number">●</span>
+                        <p>Click "Join WhatsApp Group" above</p>
                     </div>
                     <div class="step">
-                        <span class="step-number">2</span>
+                        <span class="step-number">●</span>
                         <p>Introduce yourself to the community</p>
-                    </div>
-                    <div class="step">
-                        <span class="step-number">3</span>
-                        <p>Check out upcoming runs and events</p>
                     </div>
                 </div>
             </div>
