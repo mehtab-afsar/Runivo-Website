@@ -3,336 +3,1350 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Runivo - Premium Running Club</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="src/assets/css/style.css">
+    <title>Runivo — We Run Together</title>
+    <meta name="description" content="Runivo is Bengaluru's 1,000+ member running community. Group runs, a community app, and a crew that shows up every Sunday.">
+    <meta property="og:title" content="Runivo">
+    <meta property="og:description" content="1,000+ runners. Built from nothing. Come run with us.">
+    <meta name="theme-color" content="#ff6b35">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <style>
+/* ===================================
+   ROOT — using existing project colors
+   =================================== */
+:root {
+    --black:       #0A0A0A;
+    --orange:      #ff6b35;   /* existing project primary */
+    --orange-dark: #cc4a1a;   /* darker hover */
+    --white:       #FFFFFF;
+    --off-white:   #F5F5F3;
+    --grey-dark:   #1C1C1C;
+    --grey-mid:    #3A3A3A;
+    --text-light:  #AAAAAA;
+    --text-white:  #F0F0F0;
+    --font-h:      'Syne', sans-serif;
+    --font-b:      'Inter', sans-serif;
+    --ease:        0.3s ease;
+    --r:           8px;
+}
+
+/* ===================================
+   RESET
+   =================================== */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+    font-family: var(--font-b);
+    background: var(--black);
+    color: var(--text-white);
+    overflow-x: hidden;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { text-decoration: none; color: inherit; transition: var(--ease); }
+button { border: none; background: none; font-family: inherit; cursor: pointer; }
+ul { list-style: none; }
+
+/* ===================================
+   SHARED BUTTONS
+   =================================== */
+.btn-primary {
+    display: inline-block;
+    font-family: var(--font-h);
+    font-size: 0.875rem;
+    font-weight: 700;
+    background: var(--orange);
+    color: var(--white);
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    transition: background var(--ease), transform var(--ease);
+}
+.btn-primary:hover { background: var(--orange-dark); color: var(--white); transform: translateY(-2px); }
+
+.btn-secondary {
+    display: inline-block;
+    font-family: var(--font-h);
+    font-size: 0.875rem;
+    font-weight: 700;
+    background: transparent;
+    color: var(--white);
+    border: 1.5px solid rgba(255,255,255,0.7);
+    padding: 0.875rem 2rem;
+    border-radius: 6px;
+    transition: border-color var(--ease), color var(--ease), transform var(--ease);
+}
+.btn-secondary:hover { border-color: var(--orange); color: var(--orange); transform: translateY(-2px); }
+
+/* ===================================
+   SECTION LABELS / TITLES
+   =================================== */
+.s-label {
+    font-family: var(--font-h);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1rem;
+}
+.s-title {
+    font-family: var(--font-h);
+    font-size: clamp(2rem, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--black);
+}
+.s-title.light { color: var(--white); }
+
+/* ===================================
+   NAV
+   =================================== */
+.nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 5%;
+    transition: background 0.4s ease, border-bottom 0.4s ease, box-shadow 0.4s ease;
+}
+.nav.scrolled {
+    background: var(--black);
+    border-bottom: 1px solid var(--grey-mid);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+}
+.nav-logo {
+    font-family: var(--font-h);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+.nav-logo .dot { color: var(--orange); }
+.hex-o {
+    display: inline-block;
+    vertical-align: middle;
+    margin: 0 0.04em;
+    margin-bottom: 0.1em;
+}
+.hex-o svg { display: block; }
+.nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+}
+.nav-links a {
+    font-family: var(--font-b);
+    font-size: 0.9375rem;
+    color: var(--text-white);
+}
+.nav-links a:hover { color: var(--orange); }
+.nav-cta {
+    font-family: var(--font-h);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    background: var(--orange);
+    color: var(--white);
+    padding: 0.625rem 1.25rem;
+    border-radius: 4px;
+}
+.nav-cta:hover { background: var(--orange-dark); color: var(--white); }
+
+/* Hamburger */
+.nav-ham {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    padding: 6px;
+    cursor: pointer;
+    z-index: 1100;
+}
+.nav-ham span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--white);
+    transition: var(--ease);
+}
+.nav-ham.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-ham.open span:nth-child(2) { opacity: 0; }
+.nav-ham.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Mobile overlay */
+.nav-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: var(--black);
+    z-index: 999;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem;
+}
+.nav-overlay.open { display: flex; }
+.nav-overlay a {
+    font-family: var(--font-h);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--white);
+    text-transform: uppercase;
+}
+.nav-overlay a:hover { color: var(--orange); }
+.nav-overlay .nav-cta {
+    font-size: 1rem;
+    padding: 0.875rem 2.5rem;
+    border-radius: 6px;
+}
+
+/* ===================================
+   HERO
+   =================================== */
+.hero {
+    position: relative;
+    height: 100vh;
+    min-height: 600px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: var(--black);
+}
+.hero-bg-video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.hero-ph {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #1C1C1C 0%, #2a2a2a 60%, #1a1a1a 100%);
+}
+.hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(10,10,10,0.58);
+}
+.hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 0 5%;
+    max-width: 780px;
+}
+.hero-label {
+    font-family: var(--font-h);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 1.5rem;
+}
+.hero-title {
+    font-family: var(--font-h);
+    font-size: clamp(3.5rem, 10vw, 72px);
+    font-weight: 800;
+    line-height: 1.0;
+    text-transform: uppercase;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+.word-wrap {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    margin-right: 0.2em;
+}
+.word {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    animation: wordSlideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) var(--d, 0s) forwards;
+}
+@keyframes wordSlideUp {
+    to { transform: translateY(0); opacity: 1; }
+}
+/* RUN liquid fill */
+.run-liquid {
+    position: relative;
+    display: inline-block;
+}
+.run-base { color: var(--white); }
+.run-fill {
+    position: absolute;
+    top: 0; left: 0;
+    color: var(--orange);
+    animation: waveFill 5.5s ease-in-out 1.2s infinite;
+    white-space: nowrap;
+}
+@keyframes waveFill {
+    /* empty — wave sitting at left edge */
+    0% {
+        clip-path: polygon(0% 0%, 0% 0%, 6% 20%, -6% 40%, 6% 60%, -6% 80%, 0% 100%, 0% 100%);
+    }
+    /* filled — wave sweeps to right edge */
+    42% {
+        clip-path: polygon(0% 0%, 100% 0%, 106% 20%, 94% 40%, 106% 60%, 94% 80%, 100% 100%, 0% 100%);
+    }
+    /* hold — wave sloshes in place (invert wave) */
+    56% {
+        clip-path: polygon(0% 0%, 100% 0%, 94% 20%, 106% 40%, 94% 60%, 106% 80%, 100% 100%, 0% 100%);
+    }
+    /* hold — wave sloshes back */
+    70% {
+        clip-path: polygon(0% 0%, 100% 0%, 106% 20%, 94% 40%, 106% 60%, 94% 80%, 100% 100%, 0% 100%);
+    }
+    /* reset */
+    95%, 100% {
+        clip-path: polygon(0% 0%, 0% 0%, 6% 20%, -6% 40%, 6% 60%, -6% 80%, 0% 100%, 0% 100%);
+    }
+}
+.hero-body {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-white);
+    max-width: 520px;
+    margin: 0 auto 2.5rem;
+}
+.hero-cta {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.hero-strip {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--orange);
+}
+
+/* ===================================
+   NUMBERS
+   =================================== */
+.numbers {
+    background: var(--off-white);
+    padding: 6rem 5%;
+}
+.numbers-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    text-align: center;
+}
+.num-val {
+    font-family: var(--font-h);
+    font-size: clamp(2.5rem, 5vw, 64px);
+    font-weight: 800;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 0.75rem;
+}
+.num-lbl {
+    font-family: var(--font-b);
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #666;
+}
+
+/* ===================================
+   COMMUNITY
+   =================================== */
+.community {
+    background: var(--black);
+    padding: 7rem 5%;
+}
+.community-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 45% 55%;
+    gap: 5rem;
+    align-items: center;
+}
+.community-title {
+    font-family: var(--font-h);
+    font-size: clamp(2rem, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 2rem;
+}
+.community-body p {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: var(--text-white);
+    margin-bottom: 1.25rem;
+}
+.community-video {
+    width: 100%;
+    height: 500px;
+    object-fit: cover;
+    border-radius: var(--r);
+    display: block;
+}
+.community-footer {
+    font-size: 0.875rem;
+    color: var(--text-light);
+    margin-top: 2rem;
+}
+.img-ph {
+    background: linear-gradient(135deg, #1C1C1C 0%, #2a2a2a 100%);
+    border-radius: var(--r);
+}
+.community-img-ph { width: 100%; height: 500px; }
+
+/* ===================================
+   PAST RUNS
+   =================================== */
+.runs {
+    background: var(--off-white);
+    padding: 7rem 5%;
+}
+.sec-hdr {
+    max-width: 1200px;
+    margin: 0 auto 3.5rem;
+}
+.runs-grid {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+}
+.run-card {
+    background: var(--white);
+    border-radius: var(--r);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.run-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.14); }
+.run-card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+.run-card-img-ph {
+    width: 100%;
+    height: 220px;
+    background: linear-gradient(135deg, #1C1C1C 0%, #2a2a2a 100%);
+}
+.run-card-body { padding: 1.25rem 1.5rem 1.5rem; }
+.run-card-name {
+    font-family: var(--font-h);
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 0.375rem;
+}
+.run-card-date { font-size: 0.8125rem; color: var(--orange); font-weight: 500; margin-bottom: 0.375rem; }
+.run-card-meta { font-size: 0.875rem; color: #777; margin-bottom: 0.625rem; }
+.run-card-desc {
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.runs-more { max-width: 1200px; margin: 2.5rem auto 0; text-align: center; }
+.runs-more a { font-size: 0.9375rem; color: var(--orange); font-weight: 500; }
+.runs-more a:hover { color: var(--orange-dark); }
+
+/* ===================================
+   GALLERY
+   =================================== */
+.gallery { background: var(--black); padding: 7rem 5%; }
+.gallery-wrap { max-width: 1200px; margin: 0 auto; }
+.gallery-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+    align-items: start;
+}
+.gallery-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.gallery-item {
+    border-radius: 6px;
+    overflow: hidden;
+    transition: transform 0.35s ease;
+    cursor: pointer;
+    position: relative;
+}
+.gallery-item:hover { transform: scale(1.012); }
+.gallery-item img {
+    width: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 6px;
+    vertical-align: bottom;
+    filter: grayscale(100%);
+    transition: filter 0.5s ease;
+    will-change: filter;
+}
+.gallery-item:hover img { filter: grayscale(0%); }
+/* 3 rows — all cols = 340+220+280+24px gaps = 864px */
+.gi-r1 img { height: 340px; }
+.gi-r2 img { height: 220px; }
+.gi-r3 img { height: 280px; }
+
+
+/* ===================================
+   APP SECTION
+   =================================== */
+.app-section { background: var(--black); padding: 7rem 5%; }
+
+/* Title word animation */
+.app-word-wrap { display: inline-block; overflow: hidden; vertical-align: bottom; margin-right: 0.15em; }
+.app-word {
+    display: inline-block;
+    transform: translateY(110%);
+    opacity: 0;
+    transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.5s ease;
+    transition-delay: var(--d, 0s);
+}
+.app-section.visible .app-word { transform: translateY(0); opacity: 1; }
+
+/* Body + form fade in */
+.app-fade {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+    transition-delay: var(--d, 0s);
+}
+.app-section.visible .app-fade { opacity: 1; transform: translateY(0); }
+
+/* Pills stagger */
+.pill {
+    opacity: 0;
+    transform: scale(0.85) translateY(6px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+    transition-delay: var(--pd, 0s);
+}
+.app-section.visible .pill { opacity: 1; transform: scale(1) translateY(0); }
+
+/* Phone float + glow */
+@keyframes phoneFloat {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-14px); }
+}
+@keyframes glowPulse {
+    0%, 100% { box-shadow: 0 0 0 6px #1a1a1a, 0 32px 64px rgba(0,0,0,0.6), 0 0 30px rgba(255,107,53,0.06); }
+    50%       { box-shadow: 0 0 0 6px #1a1a1a, 0 32px 64px rgba(0,0,0,0.5), 0 0 60px rgba(255,107,53,0.22); }
+}
+.app-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+}
+.app-title {
+    font-family: var(--font-h);
+    font-size: clamp(2rem, 4vw, 48px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--white);
+    margin-bottom: 1.5rem;
+}
+.app-body { font-size: 1rem; line-height: 1.75; color: var(--text-white); margin-bottom: 2rem; }
+.app-features {
+    list-style: none;
+    margin-bottom: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+.app-feature {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    transition: border-color 0.3s ease;
+}
+.app-feature:first-child { border-top: 1px solid rgba(255,255,255,0.07); }
+.app-feature:hover { border-color: rgba(255,107,53,0.3); }
+.af-num {
+    font-family: var(--font-h);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--orange);
+    letter-spacing: 0.05em;
+    min-width: 24px;
+}
+.af-text {
+    font-family: var(--font-b);
+    font-size: 0.9375rem;
+    color: var(--text-white);
+    font-weight: 400;
+}
+.waitlist-form { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-bottom: 1rem; }
+.waitlist-input {
+    flex: 1;
+    min-width: 200px;
+    background: var(--grey-dark);
+    border: 1.5px solid var(--grey-mid);
+    color: var(--white);
+    font-family: var(--font-b);
+    font-size: 0.9375rem;
+    padding: 0.875rem 1.25rem;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color var(--ease);
+}
+.waitlist-input::placeholder { color: var(--text-light); }
+.waitlist-input:focus { border-color: var(--orange); }
+.waitlist-btn {
+    font-family: var(--font-h);
+    font-size: 0.875rem;
+    font-weight: 700;
+    background: var(--orange);
+    color: var(--white);
+    padding: 0.875rem 1.75rem;
+    border-radius: 6px;
+    transition: background var(--ease), transform var(--ease);
+    cursor: pointer;
+    white-space: nowrap;
+    border: none;
+}
+.waitlist-btn:hover { background: var(--orange-dark); transform: translateY(-2px); }
+.waitlist-btn.success { background: #22c55e; cursor: default; transform: none; }
+.waitlist-note { font-size: 0.8125rem; color: var(--text-light); }
+.app-mockup-wrap { display: flex; justify-content: center; align-items: center; }
+.app-img {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 16px;
+    display: block;
+}
+
+
+/* Orbit rings */
+.orbit {
+    position: absolute;
+    border-radius: 50%;
+    border: 1px dashed rgba(255,107,53,0.25);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+}
+.orbit-1 {
+    width: 360px; height: 360px;
+    animation: orbitSpin 12s linear infinite;
+    will-change: transform;
+}
+.orbit-2 {
+    width: 440px; height: 440px;
+    animation: orbitSpin 18s linear infinite reverse;
+    will-change: transform;
+}
+@keyframes orbitSpin { to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+/* Orbit dots */
+.orbit-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    top: 50%; left: 50%;
+    transform: rotate(var(--angle)) translateX(50%) translateY(-50%);
+}
+.orbit-1 .orbit-dot { transform: rotate(var(--angle)) translateX(180px) translateY(-50%); }
+.orbit-2 .orbit-dot { transform: rotate(var(--angle)) translateX(220px) translateY(-50%); }
+
+.orbit-dot::before {
+    content: '';
+    display: block;
+    width: 7px; height: 7px;
+    background: var(--orange);
+    border-radius: 50%;
+    box-shadow: 0 0 8px rgba(255,107,53,0.6);
+}
+.orbit-dot span {
+    position: absolute;
+    top: 50%; left: 14px;
+    transform: translateY(-50%) rotate(calc(-1 * var(--angle)));
+    font-family: var(--font-h);
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--orange);
+    white-space: nowrap;
+    opacity: 0.8;
+    letter-spacing: 0.05em;
+}
+/* Counter-rotate labels so text stays upright */
+.orbit-1 { --cr: 1; }
+.orbit-2 { --cr: -1; }
+
+/* Coming soon badge */
+.cs-badge {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,107,53,0.1);
+    border: 1px solid rgba(255,107,53,0.4);
+    color: var(--orange);
+    font-family: var(--font-h);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    padding: 0.45rem 1rem;
+    border-radius: 100px;
+    white-space: nowrap;
+    backdrop-filter: blur(6px);
+}
+.cs-pulse {
+    display: block;
+    width: 7px; height: 7px;
+    background: var(--orange);
+    border-radius: 50%;
+    animation: csPulse 1.4s ease-in-out infinite;
+}
+@keyframes csPulse {
+    0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 0 0 rgba(255,107,53,0.5); }
+    50%       { opacity: 0.7; transform: scale(1.2); box-shadow: 0 0 0 5px rgba(255,107,53,0); }
+}
+.phone-frame {
+    position: relative;
+    width: 270px;
+    background: #111;
+    border-radius: 40px;
+    border: 2px solid var(--grey-mid);
+    overflow: hidden;
+    padding: 14px 10px 10px;
+    animation: phoneFloat 3.8s ease-in-out infinite, glowPulse 3.8s ease-in-out infinite;
+    will-change: transform;
+    backface-visibility: hidden;
+}
+.phone-notch {
+    width: 80px;
+    height: 22px;
+    background: #111;
+    border-radius: 0 0 14px 14px;
+    margin: 0 auto 8px;
+    position: relative;
+    z-index: 2;
+}
+.phone-notch::before {
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #222;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.phone-screen {
+    width: 100%;
+    display: block;
+    border-radius: 28px;
+    object-fit: cover;
+}
+
+/* ===================================
+   FOUNDERS
+   =================================== */
+.founders { background: var(--off-white); padding: 7rem 5%; text-align: center; }
+.founders-hdr { max-width: 700px; margin: 0 auto 4rem; }
+.founders-grid {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+}
+.founder-card {
+    background: var(--white);
+    border-radius: var(--r);
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    transition: transform var(--ease), box-shadow var(--ease);
+}
+.founder-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.1); }
+.founder-photo {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 1.25rem;
+}
+.founder-ph {
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1C1C1C 0%, #2a2a2a 100%);
+    margin: 0 auto 1.25rem;
+}
+.founder-name { font-family: var(--font-h); font-size: 1.125rem; font-weight: 700; color: var(--black); margin-bottom: 0.5rem; }
+.founder-line { font-size: 0.875rem; color: #666; }
+
+/* ===================================
+   JOIN CTA
+   =================================== */
+.join-cta { background: var(--black); padding: 8rem 5%; text-align: center; }
+.join-cta-title {
+    font-family: var(--font-h);
+    font-size: clamp(2rem, 5vw, 56px);
+    font-weight: 800;
+    line-height: 1.1;
+    color: var(--white);
+    margin: 0 auto 1.5rem;
+    max-width: 700px;
+}
+.join-cta-body {
+    font-size: 1.0625rem;
+    color: var(--text-white);
+    line-height: 1.7;
+    max-width: 560px;
+    margin: 0 auto 2.5rem;
+}
+.join-cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem; }
+.join-cta-meta { font-size: 0.8125rem; color: var(--text-light); }
+
+/* ===================================
+   FOOTER
+   =================================== */
+.footer {
+    background: var(--black);
+    border-top: 1px solid var(--grey-mid);
+    padding: 4rem 5% 2rem;
+}
+.footer-inner {
+    max-width: 1200px;
+    margin: 0 auto 3rem;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+}
+.footer-logo { font-family: var(--font-h); font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 0.75rem; }
+.footer-logo span { color: var(--orange); }
+.footer-tag { font-size: 0.875rem; color: var(--text-light); line-height: 1.6; margin-bottom: 1rem; }
+.footer-copy { font-size: 0.8125rem; color: #555; }
+.footer-col h4 {
+    font-family: var(--font-h);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--white);
+    margin-bottom: 1.25rem;
+}
+.footer-col ul li { margin-bottom: 0.75rem; }
+.footer-col ul li a { font-size: 0.875rem; color: var(--text-light); }
+.footer-col ul li a:hover { color: var(--orange); }
+.footer-bottom {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--grey-mid);
+    text-align: center;
+    font-size: 0.8125rem;
+    color: #555;
+}
+
+/* ===================================
+   RESPONSIVE
+   =================================== */
+/* ── TABLET ── */
+@media (max-width: 1024px) {
+    .numbers-grid { grid-template-columns: repeat(3, 1fr); }
+    .runs-grid { grid-template-columns: repeat(2, 1fr); }
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-col:last-child { display: none; }
+    .gi-r1 img { height: 280px; }
+    .gi-r2 img { height: 180px; }
+    .gi-r3 img { height: 220px; }
+    .community-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .community-video { height: 360px; }
+    .app-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .app-mockup-wrap { order: -1; }
+    .founders-grid { grid-template-columns: repeat(2, 1fr); max-width: 680px; }
+    .footer-inner { grid-template-columns: 1fr 1fr; }
+    .numbers, .community, .runs, .gallery,
+    .app-section, .founders, .join-cta { padding-top: 5rem; padding-bottom: 5rem; }
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+    /* Nav */
+    .nav { padding: 1rem 5%; }
+    .nav-links, .nav-cta { display: none; }
+    .nav-ham { display: flex; }
+
+    /* Hero */
+    .hero-title { font-size: 3rem; }
+    .hero-body { font-size: 0.9375rem; }
+    .hero-cta { flex-direction: column; align-items: center; }
+    .hero-cta .btn-primary, .hero-cta .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+
+    /* Numbers */
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .num-val { font-size: 2.5rem; }
+
+    /* Community */
+    .community-inner { grid-template-columns: 1fr; gap: 2rem; }
+    .community-video { height: 260px; }
+    .community-title { font-size: 2rem; }
+
+    /* Runs */
+    .runs-grid { grid-template-columns: 1fr; }
+    .run-card-img, .run-card-img-ph { height: 180px; }
+
+    /* Gallery */
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .gallery-col:last-child { display: none; }
+    .gi-r1 img { height: 220px; }
+    .gi-r2 img { height: 150px; }
+    .gi-r3 img { height: 180px; }
+
+    /* App */
+    .app-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+    .app-mockup-wrap { order: -1; }
+    .phone-frame { width: 220px; }
+    .app-title { font-size: 2rem; }
+    .app-pills { gap: 0.5rem; }
+    .waitlist-form { flex-direction: column; }
+    .waitlist-input { min-width: unset; width: 100%; }
+    .waitlist-btn { width: 100%; }
+
+    /* Founders */
+    .founders-grid { grid-template-columns: repeat(2, 1fr); max-width: 100%; gap: 1rem; }
+    .founder-card { padding: 1.5rem 1rem; }
+
+    /* Join CTA */
+    .join-cta-btns { flex-direction: column; align-items: center; }
+    .join-cta-btns .btn-primary,
+    .join-cta-btns .btn-secondary { width: 100%; max-width: 280px; text-align: center; }
+
+    /* Footer */
+    .footer-inner { grid-template-columns: 1fr; gap: 2rem; }
+
+    /* Spacing */
+    .numbers, .community, .runs, .gallery,
+    .app-section, .founders, .join-cta { padding-top: 3.5rem; padding-bottom: 3.5rem; }
+    .sec-hdr { margin-bottom: 2rem; }
+}
+
+/* ── SMALL MOBILE ── */
+@media (max-width: 420px) {
+    .hero-title { font-size: 2.5rem; }
+    .numbers-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+    .num-val { font-size: 2rem; }
+    .gallery-grid { grid-template-columns: 1fr; }
+    .gallery-col:last-child { display: flex; }
+    .gi-r1 img { height: 260px; }
+    .gi-r2 img { height: 180px; }
+    .gi-r3 img { height: 210px; }
+    .founders-grid { grid-template-columns: 1fr; max-width: 320px; }
+    .s-title { font-size: 1.75rem; }
+    .app-word-wrap { margin-right: 0.1em; }
+}
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <nav class="nav">
-            <div class="logo">RUNIVO</div>
-            <ul class="nav-links">
-                <li><a href="#about">About</a></li>
-                <li><a href="#programs">Programs</a></li>
-                <li><a href="#merch">Merch</a></li>
-                <li><a href="#team">Team</a></li>
-                <li><a href="#events">Events</a></li>
-            </ul>
-            <a href="join-community.html" class="join-btn">Join Club</a>
-        </nav>
-    </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <div class="hero-text">
-                <h1 class="hero-title">Run With Purpose</h1>
-                <p class="hero-subtitle">One tribe. All sports. Zero boredom.</p>
-                <div class="hero-cta">
-                    <a href="join-community.html" class="btn-primary">Join Our Community</a>
-                    <a href="#about" class="btn-secondary">Learn More</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="src/assets/images/hero/runivo hero.avif" alt="Runners on a trail" class="hero-img">
+<!-- NAV -->
+<nav class="nav" id="nav">
+    <a href="#" class="nav-logo">RUNIV<span class="hex-o"><svg viewBox="0 0 24 28" width="16" height="19" xmlns="http://www.w3.org/2000/svg"><polygon points="12,1.5 22.5,7.25 22.5,20.75 12,26.5 1.5,20.75 1.5,7.25" fill="none" stroke="#ff6b35" stroke-width="2.2" stroke-linejoin="round"/></svg></span></a>
+    <ul class="nav-links">
+        <li><a href="#community">Community</a></li>
+        <li><a href="#runs">Runs</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#app">App</a></li>
+    </ul>
+    <a href="#app" class="nav-cta">Join Waitlist</a>
+    <button class="nav-ham" id="ham" aria-label="Menu">
+        <span></span><span></span><span></span>
+    </button>
+</nav>
+
+<div class="nav-overlay" id="navOverlay">
+    <a href="#community">Community</a>
+    <a href="#runs">Runs</a>
+    <a href="#gallery">Gallery</a>
+    <a href="#app">App</a>
+    <a href="#app" class="nav-cta">Join Waitlist</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="hero-ph"></div>
+    <video class="hero-bg-video" autoplay muted loop playsinline>
+        <source src="media/IMG_3447.MOV" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+        <p class="hero-label" data-aos="fade-up" data-aos-duration="600">Bengaluru · Est. 2025</p>
+        <h1 class="hero-title">
+            <span class="word-wrap"><span class="word" style="--d:0.1s">WE</span></span>
+            <span class="word-wrap"><span class="word" style="--d:0.22s"><span class="run-liquid"><span class="run-base">RUN.</span><span class="run-fill" aria-hidden="true">RUN.</span></span></span></span>
+            <br>
+            <span class="word-wrap"><span class="word" style="--d:0.38s">TOGETHER.</span></span>
+        </h1>
+        <p class="hero-body" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+            Building Strava for India — built by runners, for runners.
+            A community, an app, and a movement. All in one.
+        </p>
+        <div class="hero-cta" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+            <a href="#runs" class="btn-primary">See Our Runs</a>
+            <a href="#app" class="btn-secondary">Join the App</a>
+        </div>
+    </div>
+    <div class="hero-strip"></div>
+</section>
+
+<!-- NUMBERS -->
+<section class="numbers">
+    <div class="numbers-grid">
+        <div class="number-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+            <div class="num-val" data-target="1000" data-suffix="+">0</div>
+            <div class="num-lbl">Community Members</div>
+        </div>
+        <div class="number-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+            <div class="num-val" data-target="25" data-suffix="+">0</div>
+            <div class="num-lbl">Events Done</div>
+        </div>
+        <div class="number-item" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+            <div class="num-val" style="font-size:clamp(1.5rem,3.5vw,42px);letter-spacing:-0.01em;">Namma</div>
+            <div class="num-lbl">Bengaluru</div>
+        </div>
+    </div>
+</section>
+
+<!-- COMMUNITY -->
+<section class="community" id="community">
+    <div class="community-inner">
+        <div data-aos="fade-right" data-aos-duration="600">
+            <p class="s-label">The Community</p>
+            <h2 class="community-title">Not a club.<br>A movement.</h2>
+            <div class="community-body">
+                <p>Runivo started with three people and a WhatsApp group. No funding, no fleet sponsors, no paid influencers. Just a shared belief that running is better when you're not alone.</p>
+                <p>We run early mornings, late evenings, and on days when it doesn't make sense to run. We've had first-timers complete their first 5K and veterans clock sub-4 marathons. The pace doesn't matter. Showing up does.</p>
+                <p>In two years, we've grown to over 1,000 runners across Bengaluru — entirely through word of mouth. Every member brought someone else. That's the only growth strategy we've ever had.</p>
             </div>
         </div>
-    </section>
+        <div data-aos="fade-left" data-aos-duration="600">
+            <video class="community-video" src="media/IMG_3476_trim.MOV" autoplay muted loop playsinline></video>
+        </div>
+    </div>
+</section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-        <div class="about-container">
-            <div class="about-content">
-                <h2>More Than Just Running</h2>
-                <p>Runivo was founded on the belief that running is more than a sport—it's a pathway to connection, growth, and community. Since 2018, we've brought together runners of all levels to share the joy of the run.</p>
-                <p>Whether you're training for your first 5K or your tenth marathon, you'll find your pace with us. Our inclusive community celebrates every achievement, from personal records to simply showing up on a tough day.</p>
-                <div class="about-stats">
-                    <div class="stat">
-                        <div class="stat-number">500+</div>
-                        <div class="stat-label">Active Members</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">50</div>
-                        <div class="stat-label">Weekly Runs</div>
-                    </div>
-                    <div class="stat">
-                        <div class="stat-number">25</div>
-                        <div class="stat-label">Annual Events</div>
-                    </div>
-                </div>
-            </div>
-            <div class="about-image">
-                <img src="https://images.unsplash.com/photo-1552674605-db6ffd4facb5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Running community" class="about-img">
+<!-- PAST RUNS -->
+<section class="runs" id="runs">
+    <div class="sec-hdr">
+        <p class="s-label">Where We've Been</p>
+    </div>
+    <div class="runs-grid">
+        <div class="run-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+            <img src="src/assets/images/hero/runivo hero.jpg" alt="Cubbon Park 10K" class="run-card-img">
+            <div class="run-card-body">
+                <div class="run-card-name">Cubbon Park 10K</div>
+                <div class="run-card-date">February 4, 2024</div>
+                <div class="run-card-meta">Cubbon Park · 10 km</div>
+                <div class="run-card-desc">80+ runners, misty morning, the city still half-asleep. One of our best.</div>
             </div>
         </div>
-    </section>
-
-    <!-- Programs Section -->
-    <section class="programs" id="programs">
-        <div class="programs-container">
-            <div class="programs-header">
-                <h2 class="section-title">Training Programs</h2>
-                <p class="section-subtitle">Structured programs designed to help you achieve your running goals, whether you're just starting out or aiming for a personal best.</p>
-            </div>
-
-            <div class="programs-grid">
-                <div class="program-card">
-                    <img src="https://images.unsplash.com/photo-1476480862126-209bfaa8edc8?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Beginner running" class="program-image">
-                    <div class="program-content">
-                        <h3 class="program-title">Beginner's Journey</h3>
-                        <p style="text-align: center; color: #ff6b35; font-weight: 600; font-size: 1.2rem; margin-top: 1rem;">Coming Soon!</p>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Marathon training" class="program-image">
-                    <div class="program-content">
-                        <h3 class="program-title">Marathon Mastery</h3>
-                        <p style="text-align: center; color: #ff6b35; font-weight: 600; font-size: 1.2rem; margin-top: 1rem;">Coming Soon!</p>
-                    </div>
-                </div>
-
-                <div class="program-card">
-                    <img src="src\assets\images\programs\fast runivo.jpg" alt="Speed training" class="program-image">
-                    <div class="program-content">
-                        <h3 class="program-title">Speed & Strength</h3>
-                        <p style="text-align: center; color: #ff6b35; font-weight: 600; font-size: 1.2rem; margin-top: 1rem;">Coming Soon!</p>
-                    </div>
-                </div>
+        <div class="run-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+            <img src="media/IMG_4188.jpg" alt="Cubbon Park Run" class="run-card-img">
+            <div class="run-card-body">
+                <div class="run-card-name">Cubbon Park Run</div>
+                <div class="run-card-date">March 16, 2024</div>
+                <div class="run-card-meta">Cubbon Park · 7 km</div>
+                <div class="run-card-desc">Early morning, green lanes, good people. A run that became a ritual.</div>
             </div>
         </div>
-    </section>
-
-    <!-- Merch Section -->
-    <section class="merch" id="merch">
-        <div class="merch-container">
-            <div class="merch-header">
-                <h2 class="section-title">Club Merchandise</h2>
-                <p class="section-subtitle">Show your Runivo pride with our premium collection of running gear and lifestyle apparel.</p>
-            </div>
-            
-            <div class="merch-grid">
-                <div class="merch-item">
-                    <div class="merch-image" style="background: linear-gradient(45deg, #ff6b35, #f7931e);"></div>
-                    <div class="merch-content">
-                        <h3 class="merch-name">Runivo Performance Tee</h3>
-                        <p class="merch-price" style="text-align: center; color: #ff6b35; font-weight: 600; font-size: 1.2rem;">Coming Soon!</p>
-                    </div>
-                </div>
-
-                <div class="merch-item">
-                    <div class="merch-image" style="background: linear-gradient(45deg, #2c2c2c, #555);"></div>
-                    <div class="merch-content">
-                        <h3 class="merch-name">Runivo Hoodie</h3>
-                        <p class="merch-price" style="text-align: center; color: #ff6b35; font-weight: 600; font-size: 1.2rem;">Coming Soon!</p>
-                    </div>
-                </div>
-
-                <div class="merch-item">
-                    <div class="merch-image" style="background: linear-gradient(45deg, #ff6b35, #fff);"></div>
-                    <div class="merch-content">
-                        <h3 class="merch-name">Runivo Water Bottle</h3>
-                        <p class="merch-price" style="text-align: center; color: #ff6b35; font-weight: 600; font-size: 1.2rem;">Coming Soon!</p>
-                    </div>
-                </div>
+        <div class="run-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+            <img src="media/WhatsApp Image 2026-03-28 at 01.44.26.jpeg" alt="JP Nagar Run" class="run-card-img">
+            <div class="run-card-body">
+                <div class="run-card-name">JP Nagar Run</div>
+                <div class="run-card-date">April 7, 2024</div>
+                <div class="run-card-meta">JP Nagar · 8 km</div>
+                <div class="run-card-desc">South Bengaluru showed up. New faces, familiar energy. That's how Runivo grows.</div>
             </div>
         </div>
-    </section>
+    </div>
+    <div class="runs-more">
+        <a href="https://www.instagram.com/runivo.app?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">More runs on our Instagram →</a>
+    </div>
+</section>
 
-    <!-- Team Section -->
-    <section class="team" id="team">
-        <div class="team-container">
-            <div class="team-header">
-                <h2 class="section-title">Meet Our Team</h2>
-                <p class="section-subtitle">The passionate runners and coaches who make Runivo the welcoming community it is today.</p>
-            </div>
-            
-            <div class="team-grid">
-                <div class="team-member">
-                    <img src="src\assets\images\team\4.jpg" alt="Alex Johnson" class="member-photo">
-                    <h3 class="member-name">Alex Johnson</h3>
-                    <p class="member-role">Founder & Head Coach</p>
-                    <p class="member-bio">Marathon veteran with 15 years of coaching experience. Alex founded Runivo to create an inclusive space for all runners.</p>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1494790108755-2616b612b977?ixlib=rb-4.0.3&auto=format&fit=crop&w=687&q=80" alt="Sarah Chen" class="member-photo">
-                    <h3 class="member-name">Sarah Chen</h3>
-                    <p class="member-role">Training Director</p>
-                    <p class="member-bio">Former Olympic trials qualifier specializing in middle-distance training and injury prevention programs.</p>
-                </div>
-                
-                <div class="team-member">
-                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Mike Rodriguez" class="member-photo">
-                    <h3 class="member-name">Mike Rodriguez</h3>
-                    <p class="member-role">Community Manager</p>
-                    <p class="member-bio">The heart of our community events and social runs. Mike ensures every member feels welcome and supported.</p>
-                </div>
-            </div>
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+    <div class="gallery-wrap">
+        <div class="sec-hdr" style="margin-bottom:3rem;">
+            <p class="s-label">In the Wild</p>
+            <h2 class="s-title light">We Shoot What We Run.</h2>
         </div>
-    </section>
-
-    <!-- Events Section -->
-    <section class="events" id="events">
-        <div class="events-container">
-            <div class="events-header">
-                <h2 class="section-title">Upcoming Events</h2>
-                <p class="section-subtitle">Join us for our signature races, social runs, and community gatherings throughout the year.</p>
-            </div>
-            
-            <div class="events-list">
-                <div class="event-item">
-                    <div class="event-date">
-                        <div class="event-day">15</div>
-                        <div class="event-month">Mar</div>
-                    </div>
-                    <div class="event-details">
-                        <h3>Spring 10K Challenge</h3>
-                        <p>Kick off spring with our annual 10K through the scenic riverside trail. All paces welcome with post-race celebration.</p>
-                    </div>
-                    <a href="event-registration.html?event=spring-10k" class="event-register">Register Now</a>
+        <div class="gallery-grid">
+            <!-- Col 1 -->
+            <div class="gallery-col" data-aos="fade-up" data-aos-duration="700" data-aos-delay="0">
+                <div class="gallery-item gi-r1">
+                    <img src="media/IMG_3498.JPG" alt="Runivo runner" loading="lazy">
                 </div>
-                
-                <div class="event-item">
-                    <div class="event-date">
-                        <div class="event-day">22</div>
-                        <div class="event-month">Apr</div>
-                    </div>
-                    <div class="event-details">
-                        <h3>Night Run Social</h3>
-                        <p>Join us for an evening run through the city lights followed by pizza and community bonding at our favorite local spot.</p>
-                    </div>
-                    <a href="event-registration.html?event=night-run" class="event-register">Register Now</a>
+                <div class="gallery-item gi-r2">
+                    <img src="media/IMG_4338.jpg" alt="Runivo run" loading="lazy">
                 </div>
-                
-                <div class="event-item">
-                    <div class="event-date">
-                        <div class="event-day">08</div>
-                        <div class="event-month">May</div>
-                    </div>
-                    <div class="event-details">
-                        <h3>Runivo Half Marathon</h3>
-                        <p>Our flagship event featuring a beautiful course, professional timing, and the best post-race celebration in the city.</p>
-                    </div>
-                    <a href="event-registration.html?event=half-marathon" class="event-register btn-primary">Register Now</a>
+                <div class="gallery-item gi-r3">
+                    <img src="media/IMG_4406.jpg" alt="Runivo runner" loading="lazy">
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta" id="join">
-        <div class="cta-container">
-            <h2>Ready to Join the Runivo Family?</h2>
-            <p>Become part of a community that celebrates every runner, supports every goal, and makes every mile more meaningful.</p>
-            <a href="join-community.html" class="cta-btn">Start Your Journey Today</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-container">
-            <div class="footer-brand">
-                <h3>Runivo</h3>
-                <p>Building a community where every runner belongs. Join us on the journey to discover what's possible when we run together.</p>
+            <!-- Col 2 -->
+            <div class="gallery-col" data-aos="fade-up" data-aos-duration="700" data-aos-delay="100">
+                <div class="gallery-item gi-r1">
+                    <img src="media/IMG_3551.jpg" alt="Runivo runner" loading="lazy">
+                </div>
+                <div class="gallery-item gi-r2">
+                    <img src="media/IMG_4188.jpg" alt="Runivo community run" loading="lazy">
+                </div>
+                <div class="gallery-item gi-r3">
+                    <img src="media/IMG_4335.jpg" alt="Runivo runner" loading="lazy">
+                </div>
             </div>
-            
-            
-            
-            <div class="footer-section">
-                <h4>Connect</h4>
-                <ul>
-                    <li><a href="https://www.instagram.com/runivo.blr?igsh=MXM3OHZwMHNxY25odg%3D%3D&utm_source=qr" target="_blank">Instagram</a></li>
-                    <li><a href="https://strava.app.link/1GXhzBnNRWb" target="_blank">Strava Club</a></li>
-                    <li><a href="javascript:void(0)" onclick="showContactModal(event)">Contact Us</a></li>
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 Runivo Running Club. All rights reserved. Run with purpose, run with community.</p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]:not([href="#"])').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const href = this.getAttribute('href');
-                if (href && href !== '#') {
-                    const target = document.querySelector(href);
-                    if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-
-        // Enhanced header background on scroll
-        window.addEventListener('scroll', function() {
-            const header = document.querySelector('.header');
-            if (window.scrollY > 100) {
-                header.style.background = 'rgba(255, 255, 255, 0.9)';
-                header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.15)';
-                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.15)';
-            } else {
-                header.style.background = 'rgba(255, 255, 255, 0.7)';
-                header.style.borderBottom = '1px solid rgba(255, 107, 53, 0.1)';
-                header.style.boxShadow = '0 8px 32px rgba(0, 0, 0, 0.1)';
-            }
-        });
-
-        // Intersection Observer for animations
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-
-        const observer = new IntersectionObserver(function(entries) {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        // Observe elements for animation
-        document.querySelectorAll('.program-card, .merch-item, .team-member, .event-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'all 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
-
-    <!-- Contact Modal -->
-    <div class="modal" id="contactModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Reach Out to Us</h2>
-                <button class="modal-close" onclick="closeContactModal()">&times;</button>
-            </div>
-            <div class="modal-body">
-                <p style="text-align: center; margin-bottom: 2rem; color: #666; font-size: 1.1rem;">
-                    We'd love to hear from you! Send us an email at:
-                </p>
-                <div class="email-display">
-                    <p class="email-address">runivo.official@gmail.com</p>
-                    <button class="copy-email-btn" onclick="copyEmail()">
-                        <span class="copy-icon">⧉</span>
-                        Copy Email
-                    </button>
+            <!-- Col 3 -->
+            <div class="gallery-col" data-aos="fade-up" data-aos-duration="700" data-aos-delay="200">
+                <div class="gallery-item gi-r1">
+                    <img src="media/WhatsApp Image 2026-03-28 at 01.44.26 (1).jpeg" alt="Runivo runner" loading="lazy">
+                </div>
+                <div class="gallery-item gi-r2">
+                    <img src="media/WhatsApp Image 2026-03-28 at 01.44.26 (2).jpeg" alt="Runivo runner" loading="lazy">
+                </div>
+                <div class="gallery-item gi-r3">
+                    <img src="media/WhatsApp Image 2026-03-28 at 01.44.26.jpeg" alt="Runivo runner" loading="lazy">
                 </div>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Main JavaScript -->
-    <script src="src/assets/js/main.js"></script>
+<!-- APP -->
+<section class="app-section" id="app">
+    <div class="app-inner">
+        <div>
+            <p class="s-label app-fade" style="--d:0.1s">Something New</p>
+            <h2 class="app-title">
+                <span class="app-word-wrap"><span class="app-word" style="--d:0.15s">Your</span></span>
+                <span class="app-word-wrap"><span class="app-word" style="--d:0.25s">running</span></span>
+                <span class="app-word-wrap"><span class="app-word" style="--d:0.35s">life.</span></span>
+                <br>
+                <span class="app-word-wrap"><span class="app-word" style="--d:0.48s">Tracked.</span></span>
+                <span class="app-word-wrap"><span class="app-word" style="--d:0.58s">Coached.</span></span>
+                <br>
+                <span class="app-word-wrap"><span class="app-word" style="--d:0.7s">Shared.</span></span>
+            </h2>
+            <p class="app-body app-fade" style="--d:0.8s">
+                We've been running together for two years. Now we're building the app that should have existed from the start.<br><br>
+                Track your runs. Get coached by AI. Log your nutrition. Connect with your crew. The Runivo App is everything a runner needs — built for how we actually run, not how an algorithm thinks we do.
+            </p>
+            <ul class="app-features">
+                <li class="app-feature app-fade" style="--d:0.85s"><span class="af-num">01</span><span class="af-text">AI Running Coach</span></li>
+                <li class="app-feature app-fade" style="--d:0.95s"><span class="af-num">02</span><span class="af-text">Activity & Route Tracking</span></li>
+                <li class="app-feature app-fade" style="--d:1.05s"><span class="af-num">03</span><span class="af-text">Calorie & Nutrition Log</span></li>
+                <li class="app-feature app-fade" style="--d:1.15s"><span class="af-num">04</span><span class="af-text">Community Social Feed</span></li>
+                <li class="app-feature app-fade" style="--d:1.25s"><span class="af-num">05</span><span class="af-text">Group Run Planner</span></li>
+            </ul>
+            <form class="waitlist-form app-fade" style="--d:1.1s" id="waitlistForm">
+                <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="Enter your email" required>
+                <button type="submit" class="waitlist-btn" id="waitlistBtn">Join the Waitlist</button>
+            </form>
+            <p class="waitlist-note app-fade" style="--d:1.2s">Already 1,000+ runners waiting. Be first in line.</p>
+        </div>
+        <div class="app-mockup-wrap" data-aos="fade-left" data-aos-duration="800">
+            <img src="media/Leave_the_basement_behind__version_1.jpg" alt="Runivo App" class="app-img">
+        </div>
+    </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="founders" id="founders">
+    <div class="founders-hdr" data-aos="fade-up" data-aos-duration="600">
+        <p class="s-label">Built by Runners</p>
+        <h2 class="s-title">Four People. One Stupid Idea. It Worked.</h2>
+    </div>
+    <div class="founders-grid">
+        <div class="founder-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="0">
+            <div class="founder-ph"></div>
+            <div class="founder-name">Mohammed Mehtab Afsar</div>
+            <div class="founder-line">Co-Founder · Builder, runner, the one who won't let you skip leg day.</div>
+        </div>
+        <div class="founder-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+            <div class="founder-ph"></div>
+            <div class="founder-name">Syed Umair</div>
+            <div class="founder-line">Co-Founder · The one who mapped every route before we ran it.</div>
+        </div>
+        <div class="founder-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+            <div class="founder-ph"></div>
+            <div class="founder-name">Abhishek Singh</div>
+            <div class="founder-line">Co-Founder · The one who shows up at 4am and doesn't complain.</div>
+        </div>
+        <div class="founder-card" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+            <div class="founder-ph"></div>
+            <div class="founder-name">Khamyong Subba</div>
+            <div class="founder-line">Co-Founder · The one who keeps the pack together on every run.</div>
+        </div>
+    </div>
+</section>
+
+<!-- JOIN CTA -->
+<section class="join-cta" id="join">
+    <h2 class="join-cta-title" data-aos="fade-up" data-aos-duration="600">You've read enough.<br>Come run with us.</h2>
+    <p class="join-cta-body" data-aos="fade-up" data-aos-duration="600" data-aos-delay="100">
+        Every Sunday. Every pace. Every level.<br>The only requirement is that you show up.
+    </p>
+    <div class="join-cta-btns" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
+        <a href="https://chat.whatsapp.com/Gs7dSyK7HRb3xESaNG5gdo?mode=gi_t" target="_blank" class="btn-primary">Join on WhatsApp</a>
+        <a href="#app" class="btn-secondary">Join App Waitlist</a>
+    </div>
+    <p class="join-cta-meta" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
+        mehtabafsar346@gmail.com &nbsp;·&nbsp; Bengaluru, India &nbsp;·&nbsp; @runivo
+    </p>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-inner">
+        <div>
+            <div class="footer-logo" style="display:flex;align-items:center;">RUNIV<span class="hex-o"><svg viewBox="0 0 24 28" width="16" height="19" xmlns="http://www.w3.org/2000/svg"><polygon points="12,1.5 22.5,7.25 22.5,20.75 12,26.5 1.5,20.75 1.5,7.25" fill="none" stroke="#ff6b35" stroke-width="2.2" stroke-linejoin="round"/></svg></span></div>
+            <p class="footer-tag">Built by runners. Run by community.</p>
+            <p class="footer-copy">© 2025 Runivo. All rights reserved.</p>
+        </div>
+        <div class="footer-col">
+            <h4>Links</h4>
+            <ul>
+                <li><a href="#community">Community</a></li>
+                <li><a href="#runs">Our Runs</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#app">The App</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="https://www.instagram.com/runivo.app?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank">Instagram: @runivo</a></li>
+                <li><a href="https://chat.whatsapp.com/Gs7dSyK7HRb3xESaNG5gdo?mode=gi_t" target="_blank">WhatsApp Community</a></li>
+                <li><a href="mailto:mehtabafsar346@gmail.com">mehtabafsar346@gmail.com</a></li>
+                <li><span style="color:#555;">Bengaluru, India</span></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">Runivo Running Club · Bengaluru, India · @runivo.blr</div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+// AOS
+AOS.init({ once: true, duration: 600 });
+
+// Nav scroll
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', function(e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            navOverlay.classList.remove('open');
+            ham.classList.remove('open');
+        }
+    });
+});
+
+// Mobile nav
+const ham = document.getElementById('ham');
+const navOverlay = document.getElementById('navOverlay');
+ham.addEventListener('click', () => {
+    ham.classList.toggle('open');
+    navOverlay.classList.toggle('open');
+});
+
+// Count-up
+function countUp(el) {
+    const target = parseInt(el.dataset.target);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1200;
+    const stepTime = 16;
+    const steps = duration / stepTime;
+    const increment = target / steps;
+    let current = 0;
+    const timer = setInterval(() => {
+        current += increment;
+        if (current >= target) {
+            el.textContent = target.toLocaleString() + suffix;
+            clearInterval(timer);
+        } else {
+            el.textContent = Math.floor(current).toLocaleString() + suffix;
+        }
+    }, stepTime);
+}
+
+const counterObs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            countUp(e.target);
+            counterObs.unobserve(e.target);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.num-val[data-target]').forEach(el => counterObs.observe(el));
+
+// App section reveal
+const appSection = document.querySelector('.app-section');
+new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            e.target.classList.add('visible');
+        }
+    });
+}, { threshold: 0.15 }).observe(appSection);
+
+// Waitlist form
+const form = document.getElementById('waitlistForm');
+const btn = document.getElementById('waitlistBtn');
+const emailInput = document.getElementById('waitlistEmail');
+
+form.addEventListener('submit', e => {
+    e.preventDefault();
+    const email = emailInput.value.trim();
+    if (!email) return;
+    const list = JSON.parse(localStorage.getItem('runivo_waitlist') || '[]');
+    if (!list.includes(email)) { list.push(email); localStorage.setItem('runivo_waitlist', JSON.stringify(list)); }
+    btn.textContent = "You're on the list ✓";
+    btn.classList.add('success');
+    emailInput.disabled = true;
+    btn.disabled = true;
+});
+</script>
 </body>
 </html>
