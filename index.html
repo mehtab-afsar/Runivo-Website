@@ -966,6 +966,52 @@ ul { list-style: none; }
     .s-title { font-size: 1.75rem; }
     .app-word-wrap { margin-right: 0.1em; }
 }
+    /* Waitlist Modal */
+    .waitlist-modal-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.65);
+        backdrop-filter: blur(4px);
+        z-index: 9999;
+        align-items: center;
+        justify-content: center;
+    }
+    .waitlist-modal-overlay.open { display: flex; }
+    .waitlist-modal-card {
+        background: var(--white);
+        border-radius: 1.25rem;
+        padding: 2.5rem 2rem 2rem;
+        width: 100%;
+        max-width: 480px;
+        position: relative;
+        box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+        animation: modalIn 0.25s ease;
+    }
+    @keyframes modalIn {
+        from { opacity: 0; transform: translateY(20px) scale(0.97); }
+        to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .waitlist-modal-close {
+        position: absolute;
+        top: 1rem; right: 1.25rem;
+        background: none; border: none;
+        font-size: 1.5rem; cursor: pointer;
+        color: var(--text-light);
+        line-height: 1;
+    }
+    .waitlist-modal-close:hover { color: var(--orange); }
+    .waitlist-modal-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+        color: var(--black);
+    }
+    .waitlist-modal-sub {
+        font-size: 0.875rem;
+        color: var(--text-light);
+        margin-bottom: 1.5rem;
+    }
     </style>
 </head>
 <body>
@@ -1009,12 +1055,12 @@ ul { list-style: none; }
             <span class="word-wrap"><span class="word" style="--d:0.38s">TOGETHER.</span></span>
         </h1>
         <p class="hero-body" data-aos="fade-up" data-aos-duration="600" data-aos-delay="200">
-            Building Strava for India — built by runners, for runners.
+            India's running platform — built by runners, for runners.
             A community, an app, and a movement. All in one.
         </p>
         <div class="hero-cta" data-aos="fade-up" data-aos-duration="600" data-aos-delay="300">
             <a href="#runs" class="btn-primary">See Our Runs</a>
-            <a href="#app" class="btn-secondary">Join the App</a>
+            <button class="btn-secondary" onclick="document.getElementById('waitlistModal').classList.add('open')">Join the Waitlist</button>
         </div>
     </div>
     <div class="hero-strip"></div>
@@ -1163,16 +1209,14 @@ ul { list-style: none; }
                 Track your runs. Get coached by AI. Log your nutrition. Connect with your crew. The Runivo App is everything a runner needs — built for how we actually run, not how an algorithm thinks we do.
             </p>
             <ul class="app-features">
-                <li class="app-feature app-fade" style="--d:0.85s"><span class="af-num">01</span><span class="af-text">AI Running Coach</span></li>
-                <li class="app-feature app-fade" style="--d:0.95s"><span class="af-num">02</span><span class="af-text">Activity & Route Tracking</span></li>
-                <li class="app-feature app-fade" style="--d:1.05s"><span class="af-num">03</span><span class="af-text">Calorie & Nutrition Log</span></li>
-                <li class="app-feature app-fade" style="--d:1.15s"><span class="af-num">04</span><span class="af-text">Community Social Feed</span></li>
-                <li class="app-feature app-fade" style="--d:1.25s"><span class="af-num">05</span><span class="af-text">Group Run Planner</span></li>
+                <li class="app-feature app-fade" style="--d:0.75s"><span class="af-num">01</span><span class="af-text">Territory Capture</span></li>
+                <li class="app-feature app-fade" style="--d:0.85s"><span class="af-num">02</span><span class="af-text">AI Running Coach</span></li>
+                <li class="app-feature app-fade" style="--d:0.95s"><span class="af-num">03</span><span class="af-text">Activity & Route Tracking</span></li>
+                <li class="app-feature app-fade" style="--d:1.05s"><span class="af-num">04</span><span class="af-text">Calorie & Nutrition Log</span></li>
+                <li class="app-feature app-fade" style="--d:1.15s"><span class="af-num">05</span><span class="af-text">Community Social Feed</span></li>
+                <li class="app-feature app-fade" style="--d:1.25s"><span class="af-num">06</span><span class="af-text">Group Run Planner</span></li>
             </ul>
-            <form class="waitlist-form app-fade" style="--d:1.1s" id="waitlistForm">
-                <input type="email" class="waitlist-input" id="waitlistEmail" placeholder="Enter your email" required>
-                <button type="submit" class="waitlist-btn" id="waitlistBtn">Join the Waitlist</button>
-            </form>
+            <button class="btn-primary app-fade" style="--d:1.1s;margin-top:1rem;" onclick="document.getElementById('waitlistModal').classList.add('open')">Join the Waitlist</button>
             <p class="waitlist-note app-fade" style="--d:1.2s">Already 1,000+ runners waiting. Be first in line.</p>
         </div>
         <div class="app-mockup-wrap" data-aos="fade-left" data-aos-duration="800">
@@ -1331,22 +1375,21 @@ new IntersectionObserver((entries) => {
     });
 }, { threshold: 0.15 }).observe(appSection);
 
-// Waitlist form
-const form = document.getElementById('waitlistForm');
-const btn = document.getElementById('waitlistBtn');
-const emailInput = document.getElementById('waitlistEmail');
-
-form.addEventListener('submit', e => {
-    e.preventDefault();
-    const email = emailInput.value.trim();
-    if (!email) return;
-    const list = JSON.parse(localStorage.getItem('runivo_waitlist') || '[]');
-    if (!list.includes(email)) { list.push(email); localStorage.setItem('runivo_waitlist', JSON.stringify(list)); }
-    btn.textContent = "You're on the list ✓";
-    btn.classList.add('success');
-    emailInput.disabled = true;
-    btn.disabled = true;
+// Waitlist modal close on overlay click
+document.getElementById('waitlistModal').addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('open');
 });
 </script>
+
+<!-- Waitlist Modal -->
+<div class="waitlist-modal-overlay" id="waitlistModal">
+    <div class="waitlist-modal-card">
+        <button class="waitlist-modal-close" onclick="document.getElementById('waitlistModal').classList.remove('open')">&times;</button>
+        <p class="waitlist-modal-title">Join the Waitlist</p>
+        <p class="waitlist-modal-sub">Be first in line when Runivo launches.</p>
+        <iframe data-tally-src="https://tally.so/embed/yPxbe0?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="220" frameborder="0" marginheight="0" marginwidth="0" title="Runivo Waitlist"></iframe>
+        <script>var d=document,w="https://tally.so/widgets/embed.js",v=function(){"undefined"!=typeof Tally?Tally.loadEmbeds():d.querySelectorAll("iframe[data-tally-src]:not([src])").forEach((function(e){e.src=e.dataset.tallySrc}))};if("undefined"!=typeof Tally)v();else if(d.querySelector('script[src="'+w+'"]')==null){var s=d.createElement("script");s.src=w,s.onload=v,s.onerror=v,d.body.appendChild(s);}</script>
+    </div>
+</div>
 </body>
 </html>
